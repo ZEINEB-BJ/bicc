@@ -101,7 +101,7 @@ public class SellerDA {
 					+ "<li>Nom : " + a.getName() + "</li>"
 					+ "<li>Email : " + a.getEmail() + "</li>"
 					+ "<li>Adresse : " + a.getOfficeAddress() + "</li>"
-					+ "<li>Rôle : " + a.getRole().name() + "</li>"
+					+ "<li>Rôle : Vendeur "  + "</li>"
 					+ "</ul>"
 					+ "<p>Merci de votre confiance !</p>";
 				mailer.sendContentEmail(a.getEmail(), subject, body);

@@ -1,3 +1,4 @@
+
 package com.shopsense.dao;
 
 import java.sql.PreparedStatement;
@@ -22,6 +23,130 @@ import com.shopsense.service.EmailService;
 
 @Service
 public class CustomerDA {
+	@org.springframework.beans.factory.annotation.Value("${spring.mail.username}")
+	private String appEmail;
+	public boolean contactUs(String nom, String email, String sujet, String message) {
+		try {
+			String body = "<h2>Contact client</h2>"
+				+ "<p><b>Nom :</b> " + nom + "</p>"
+				+ "<p><b>Email :</b> " + email + "</p>"
+				+ "<p><b>Sujet :</b> " + sujet + "</p>"
+				+ "<p><b>Message :</b><br>" + message + "</p>";
+			mailer.sendContentEmail(appEmail, "Contact client : " + sujet, body);
+			return true;
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return false;
+	}
+	public List<Product> searchProducts(String q) {
+		List<Product> list = new ArrayList<>();
+		try {
+			pst = db.get().prepareStatement(
+				"SELECT product_id, title, thumbnail_url, description, regular_price, sale_price, category, stock_status, stock_count, products.status "
+				+ "FROM products JOIN sellers USING(seller_id) "
+				+ "WHERE products.status = 'Active' AND sellers.status = 'Active' AND title LIKE ?");
+			pst.setString(1, "%".concat(q).concat("%"));
+			ResultSet rs = pst.executeQuery();
+			Product p;
+			while (rs.next()) {
+				p = new Product();
+				p.setId(rs.getInt(1));
+				p.setTitle(rs.getString(2));
+				p.setThumbnailUrl(rs.getString(3));
+				p.setDescription(rs.getString(4));
+				p.setRegularPrice(rs.getString(5));
+				p.setSalePrice(rs.getString(6));
+				p.setCategory(rs.getString(7));
+				p.setStockStatus(rs.getString(8));
+				p.setStockCount(rs.getString(9));
+				p.setStatus(rs.getString(10));
+				list.add(p);
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return list;
+	}
+
+	public List<Order> getOrders(int customerId) {
+		List<Order> orders = new ArrayList<>();
+		try {
+			pst = db.get().prepareStatement("SELECT * FROM orders WHERE customer_id = ?");
+			pst.setInt(1, customerId);
+			ResultSet rs = pst.executeQuery();
+			while (rs.next()) {
+				Order o = new Order();
+				o.setId(rs.getInt("id"));
+				o.setOrderDate(rs.getDate("order_date"));
+				o.setOrderTotal(rs.getDouble("order_total"));
+				o.setCustomerId(rs.getInt("customer_id"));
+				o.setStatus(rs.getString("status"));
+				orders.add(o);
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return orders;
+	}
+
+	public Order getOrder(int id) {
+		Order o = null;
+		try {
+			pst = db.get().prepareStatement("SELECT * FROM orders WHERE id = ?");
+			pst.setInt(1, id);
+			ResultSet rs = pst.executeQuery();
+			if (rs.next()) {
+				o = new Order();
+				o.setId(rs.getInt("id"));
+				o.setOrderDate(rs.getDate("order_date"));
+				o.setOrderTotal(rs.getDouble("order_total"));
+				o.setCustomerId(rs.getInt("customer_id"));
+				o.setStatus(rs.getString("status"));
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return o;
+	}
+
+	public OrderDetails trackOrder(int id) {
+		OrderDetails od = null;
+		try {
+			pst = db.get().prepareStatement("SELECT * FROM order_details WHERE order_details_id = ?");
+			pst.setInt(1, id);
+			ResultSet rs = pst.executeQuery();
+			if (rs.next()) {
+				od = new OrderDetails();
+				od.setOrderDetailsId(rs.getInt("order_details_id"));
+				od.setOrderId(rs.getInt("order_id"));
+				od.setProductId(rs.getInt("product_id"));
+				od.setSellerId(rs.getInt("seller_id"));
+				od.setProductName(rs.getString("product_name"));
+				od.setQuantity(rs.getInt("quantity"));
+				od.setSubTotal(rs.getDouble("sub_total"));
+				od.setStatus(rs.getString("status"));
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return od;
+	}
+
+	public boolean isProductPurchased(int customerId, int productId) {
+		try {
+			pst = db.get().prepareStatement("SELECT COUNT(*) FROM orders o JOIN order_details od ON o.id = od.order_id WHERE o.customer_id = ? AND od.product_id = ?");
+			pst.setInt(1, customerId);
+			pst.setInt(2, productId);
+			ResultSet rs = pst.executeQuery();
+			if (rs.next() && rs.getInt(1) > 0) {
+				return true;
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return false;
+	}
 	PreparedStatement pst;
 
 	@Autowired
@@ -99,7 +224,7 @@ public class CustomerDA {
 					+ "<li>Nom : " + a.getName() + "</li>"
 					+ "<li>Email : " + a.getEmail() + "</li>"
 					+ "<li>Adresse : " + a.getAddress() + "</li>"
-					+ "<li>Rôle : " + a.getRole().name() + "</li>"
+					+ "<li>Rôle : Client "  + "</li>"
 					+ "</ul>"
 					+ "<p>Merci de votre confiance !</p>";
 				mailer.sendContentEmail(a.getEmail(), subject, body);
@@ -313,315 +438,44 @@ public class CustomerDA {
 				List<OrderDetails> orderDetails = a.getOrderDetails();
 				PreparedStatement pst2 = db.get().prepareStatement(
 						"INSERT INTO order_details (order_id, product_id, seller_id, store_name, product_name, product_unit_price, product_thumbnail_url, status, quantity, sub_total, delivery_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-				for (OrderDetails o : orderDetails) {
-					pst2.setInt(1, generatedId);
-					pst2.setInt(2, o.getProductId());
-					pst2.setInt(3, o.getSellerId());
-					pst2.setString(4, o.getStoreName());
-					pst2.setString(5, o.getProductName());
-					pst2.setDouble(6, o.getProductUnitPrice());
-					pst2.setString(7, o.getProductThumbnailUrl());
-					pst2.setString(8, o.getStatus());
-					pst2.setInt(9, o.getQuantity());
-					pst2.setDouble(10, o.getSubTotal());
-					pst2.setDate(11, o.getDeliveryDate());
+				   StringBuilder orderDetailString = new StringBuilder();
+				   for (OrderDetails o : orderDetails) {
+					   pst2.setInt(1, generatedId);
+					   pst2.setInt(2, o.getProductId());
+					   pst2.setInt(3, o.getSellerId());
+					   pst2.setString(4, o.getStoreName());
+					   pst2.setString(5, o.getProductName());
+					   pst2.setDouble(6, o.getProductUnitPrice());
+					   pst2.setString(7, o.getProductThumbnailUrl());
+					   pst2.setString(8, o.getStatus());
+					   pst2.setInt(9, o.getQuantity());
+					   pst2.setDouble(10, o.getSubTotal());
+					   pst2.setDate(11, o.getDeliveryDate());
+					   pst2.addBatch();
 
-					pst2.addBatch();
-				}
-				pst2.executeBatch();
+					   // Construire le tableau HTML
+					   orderDetailString.append("<tr>");
+					   orderDetailString.append("<td>").append(o.getProductName()).append("</td>");
+					   orderDetailString.append("<td>").append(o.getQuantity()).append("</td>");
+					   orderDetailString.append("<td>").append(o.getSubTotal()).append("</td>");
+					   orderDetailString.append("</tr>");
+				   }
+				   pst2.executeBatch();
 
-				PreparedStatement pst3 = db.get().prepareStatement("DELETE FROM carts WHERE customer_id = ?");
-				pst3.setInt(1, a.getCustomerId());
-				pst3.executeUpdate();
-
-				// send email
-				StringBuilder orderDetailString = new StringBuilder();
-				for (OrderDetails o : orderDetails) {
-					orderDetailString.append("<tr>");
-					orderDetailString.append("<td>" + o.getProductName() + "</td>");
-					orderDetailString.append("<td>" + o.getQuantity() + "</td>");
-					orderDetailString.append("<td>" + o.getSubTotal() + "</td>");
-					orderDetailString.append("</tr>");
-				}
-
-				String customerEmail = String.format("""
-						<html>
-						<head>
-						<style>
-							.header {
-								width: 400px;
-								background-color: #04AA6D;
-								color: white;
-								padding: 10px 20px;
-							}
-							table {
-							  border-collapse: collapse;
-							  width: 400px;
-							}
-
-							td, th {
-							  border: 1px solid #ddd;
-							  padding: 8px;
-							}
-
-							th {
-							  padding-top: 12px;
-							  padding-bottom: 12px;
-							  text-align: left;
-							  background-color: #04AA6D;
-							  color: white;
-							}
-						</style>
-						</head>
-						<body>
-							<h1 class="header">Order Placed</h1>
-							<p>Your order is placed successfully. The order is as follows:</p>
-							<table>
-								<tr>
-									<th>Product</th>
-									<th>Quantity</th>
-									<th>Price</th>
-								</tr>
-								%s
-							</table>
-						</body>
-						</html>
-						""", orderDetailString.toString());
-
-				String sellerEmail = String.format("""
-						<html>
-						<head>
-						<style>
-							.header {
-								width: 400px;
-								background-color: #04AA6D;
-								color: white;
-								padding: 10px 20px;
-							}
-							table {
-							  border-collapse: collapse;
-							  width: 400px;
-							}
-
-							td, th {
-							  border: 1px solid #ddd;
-							  padding: 8px;
-							}
-
-							th {
-							  padding-top: 12px;
-							  padding-bottom: 12px;
-							  text-align: left;
-							  background-color: #04AA6D;
-							  color: white;
-							}
-						</style>
-						</head>
-						<body>
-							<h1 class="header">New Order</h1>
-							<p>You got a new order. The order is as follows:</p>
-							<table>
-								<tr>
-									<th>Product</th>
-									<th>Quantity</th>
-									<th>Price</th>
-								</tr>
-								%s
-							</table>
-						</body>
-						</html>
-						""", orderDetailString.toString());
-
-				mailer.sendContentEmail("humahfuj@gmail.com", "Order Placed", customerEmail);
-				mailer.sendContentEmail("humahfuj@gmail.com", "New Order", sellerEmail);
-				return a;
+				   // Email de confirmation au client (après l'insertion des détails)
+				   mailer.sendContentEmail(
+					   getCustomer(a.getCustomerId()).getEmail(),
+					   "Commande passée avec succès",
+					   String.format(
+						   "<html><head><style>.header{width:400px;background-color:#04AA6D;color:white;padding:10px 20px;}table{border-collapse:collapse;width:400px;}td,th{border:1px solid #ddd;padding:8px;}th{padding-top:12px;padding-bottom:12px;text-align:left;background-color:#04AA6D;color:white;}</style></head><body><h1 class='header'>Commande passée avec succès</h1><p>Votre commande a été enregistrée. Voici le détail :</p><table><tr><th>Produit</th><th>Quantité</th><th>Prix</th></tr>%s</table></body></html>",
+						   orderDetailString.toString()
+					   )
+				   );
 			}
 		} catch (Exception e) {
 			System.out.println(e);
 		}
-		return null;
-	}
-
-	public Order getOrder(int id) {
-		try {
-			pst = db.get().prepareStatement(
-					"SELECT order_id, order_date, order_total, customer_id, discount, shipping_charge, tax, shipping_street, shipping_city, shipping_post_code, shipping_state, shipping_country, status, sub_total, payment_status, payment_method, card_number, card_cvv, card_holder_name, card_expiry_date, gateway_fee FROM orders WHERE order_id = ?");
-			pst.setInt(1, id);
-			ResultSet rs = pst.executeQuery();
-			if (rs.next()) {
-				Order a = new Order();
-				a.setId(rs.getInt(1));
-				a.setOrderDate(rs.getDate(2));
-				a.setOrderTotal(rs.getDouble(3));
-				a.setCustomerId(rs.getInt(4));
-				a.setDiscount(rs.getDouble(5));
-				a.setShippingCharge(rs.getDouble(6));
-				a.setTax(rs.getDouble(7));
-				a.setShippingStreet(rs.getString(8));
-				a.setShippingCity(rs.getString(9));
-				a.setShippingPostCode(rs.getString(10));
-				a.setShippingState(rs.getString(11));
-				a.setShippingCountry(rs.getString(12));
-				a.setStatus(rs.getString(13));
-				a.setSubTotal(rs.getDouble(14));
-				a.setPaymentStatus(rs.getString(15));
-				a.setPaymentMethod(rs.getString(16));
-				a.setCardNumber(rs.getString(17));
-				a.setCardCvv(rs.getString(18));
-				a.setCardHolderName(rs.getString(19));
-				a.setCardExpiryDate(rs.getString(20));
-				a.setGatewayFee(rs.getDouble(21));
-
-				PreparedStatement pst2 = db.get().prepareStatement(
-						"SELECT order_details_id, order_id, product_id, seller_id, store_name, product_name, product_unit_price, product_thumbnail_url, status, quantity, sub_total, delivery_date FROM order_details WHERE order_id = ?");
-				pst2.setInt(1, id);
-				ResultSet rs2 = pst2.executeQuery();
-				List<OrderDetails> orderDetails = new ArrayList<>();
-				OrderDetails o;
-				while (rs2.next()) {
-					o = new OrderDetails();
-					o.setId(rs2.getInt(1));
-					o.setOrderId(rs2.getInt(2));
-					o.setProductId(rs2.getInt(3));
-					o.setSellerId(rs2.getInt(4));
-					o.setStoreName(rs2.getString(5));
-					o.setProductName(rs2.getString(6));
-					o.setProductUnitPrice(rs2.getDouble(7));
-					o.setProductThumbnailUrl(rs2.getString(8));
-					o.setStatus(rs2.getString(9));
-					o.setQuantity(rs2.getInt(10));
-					o.setSubTotal(rs2.getDouble(11));
-					o.setDeliveryDate(rs2.getDate(12));
-					orderDetails.add(o);
-				}
-				a.setOrderDetails(orderDetails);
-				return a;
-			}
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-		return null;
-	}
-
-	// get a customers all orders by customer id
-	public List<Order> getOrders(int id) {
-		try {
-			pst = db.get().prepareStatement(
-					"SELECT order_id, order_date, order_total, customer_id, discount, shipping_charge, tax, shipping_street, shipping_city, shipping_post_code, shipping_state, shipping_country, status, sub_total, payment_status, payment_method, card_number, card_cvv, card_holder_name, card_expiry_date, gateway_fee FROM orders WHERE customer_id = ? ORDER BY order_id DESC");
-			pst.setInt(1, id);
-			ResultSet rs = pst.executeQuery();
-			List<Order> o = new ArrayList<>();
-			Order a;
-			while (rs.next()) {
-				a = new Order();
-				a.setId(rs.getInt(1));
-				a.setOrderDate(rs.getDate(2));
-				a.setOrderTotal(rs.getDouble(3));
-				a.setCustomerId(rs.getInt(4));
-				a.setDiscount(rs.getDouble(5));
-				a.setShippingCharge(rs.getDouble(6));
-				a.setTax(rs.getDouble(7));
-				a.setShippingStreet(rs.getString(8));
-				a.setShippingCity(rs.getString(9));
-				a.setShippingPostCode(rs.getString(10));
-				a.setShippingState(rs.getString(11));
-				a.setShippingCountry(rs.getString(12));
-				a.setStatus(rs.getString(13));
-				a.setSubTotal(rs.getDouble(14));
-				a.setPaymentStatus(rs.getString(15));
-				a.setPaymentMethod(rs.getString(16));
-				a.setCardNumber(rs.getString(17));
-				a.setCardCvv(rs.getString(18));
-				a.setCardHolderName(rs.getString(19));
-				a.setCardExpiryDate(rs.getString(20));
-				a.setGatewayFee(rs.getDouble(21));
-				o.add(a);
-			}
-			return o;
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-		return null;
-	}
-
-	public OrderDetails trackOrder(int id) {
-		try {
-			pst = db.get().prepareStatement(
-					"SELECT order_details_id, order_id, product_id, seller_id, store_name, product_name, product_unit_price, product_thumbnail_url, status, quantity, sub_total, delivery_date FROM order_details WHERE order_details_id = ?");
-			pst.setInt(1, id);
-			ResultSet rs = pst.executeQuery();
-			if (rs.next()) {
-				OrderDetails a = new OrderDetails();
-				a.setId(rs.getInt(1));
-				a.setOrderId(rs.getInt(2));
-				a.setProductId(rs.getInt(3));
-				a.setSellerId(rs.getInt(4));
-				a.setStoreName(rs.getString(5));
-				a.setProductName(rs.getString(6));
-				a.setProductUnitPrice(rs.getDouble(7));
-				a.setProductThumbnailUrl(rs.getString(8));
-				a.setStatus(rs.getString(9));
-				a.setQuantity(rs.getInt(10));
-				a.setSubTotal(rs.getDouble(11));
-				a.setDeliveryDate(rs.getDate(12));
-				return a;
-			}
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-		return null;
-	}
-
-	public boolean isProductPurchased(int customerId, int productId) {
-		try {
-			pst = db.get().prepareStatement("""
-						SELECT COUNT(*)
-						FROM order_details
-						JOIN orders USING(order_id)
-						WHERE product_id = ? AND customer_id = ?
-					""");
-			pst.setInt(1, productId);
-			pst.setInt(2, customerId);
-			ResultSet rs = pst.executeQuery();
-			if (rs.next()) {
-				if (rs.getInt(1) > 0) {
-					return true;
-				}
-			}
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-		return false;
-	}
-
-	public List<Product> searchProducts(String q) {
-		List<Product> list = new ArrayList<>();
-		try {
-			pst = db.get().prepareStatement(
-					"SELECT product_id, title, thumbnail_url, description, regular_price, sale_price, category, stock_status, stock_count, products.status "
-							+ "FROM products JOIN sellers USING(seller_id)"
-							+ "WHERE products.status = 'Active' AND sellers.status = 'Active' AND title LIKE ?");
-			pst.setString(1, "%".concat(q).concat("%"));
-			ResultSet rs = pst.executeQuery();
-			Product p;
-			while (rs.next()) {
-				p = new Product();
-				p.setId(rs.getInt(1));
-				p.setTitle(rs.getString(2));
-				p.setThumbnailUrl(rs.getString(3));
-				p.setDescription(rs.getString(4));
-				p.setRegularPrice(rs.getString(5));
-				p.setSalePrice(rs.getString(6));
-				p.setCategory(rs.getString(7));
-				p.setStockStatus(rs.getString(8));
-				p.setStockCount(rs.getString(9));
-				p.setStatus(rs.getString(10));
-				list.add(p);
-			}
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-		return list;
+		return a;
 	}
 
 	public boolean sendVerificationCode(Customer a) {

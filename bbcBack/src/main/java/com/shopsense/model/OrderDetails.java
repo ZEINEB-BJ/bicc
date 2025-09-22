@@ -3,6 +3,9 @@ package com.shopsense.model;
 import java.sql.Date;
 
 public class OrderDetails {
+	public void setOrderDetailsId(int id) {
+		this.id = id;
+	}
 	int id;
 	int orderId;
 	int productId;

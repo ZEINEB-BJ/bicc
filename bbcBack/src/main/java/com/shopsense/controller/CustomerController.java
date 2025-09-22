@@ -26,6 +26,10 @@ import com.shopsense.service.AuthService;
 @CrossOrigin(origins = "*")
 @RestController
 public class CustomerController {
+	@PostMapping(value = "/customer/contact")
+	public boolean contactUs(@RequestParam String nom, @RequestParam String email, @RequestParam String sujet, @RequestParam String message) {
+		return da.contactUs(nom, email, sujet, message);
+	}
 
 	@Autowired
 	CustomerDA da;
@@ -89,7 +93,7 @@ public class CustomerController {
 	}
 
 	@GetMapping(value = "/customer/order")
-	public Order getOrder(@RequestParam int id) {
+	public Order getOrderById(@RequestParam int id) {
 		return da.getOrder(id);
 	}
 

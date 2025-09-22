@@ -9,10 +9,9 @@ import { CategoryService } from 'src/app/services/category.service';
 @Component({
   selector: 'app-content',
   templateUrl: './content.component.html',
-  styleUrls: ['./content.component.css']
+  styleUrls: ['./content.component.css'],
 })
 export class ContentComponent implements OnInit {
-
   products: Product[] = [];
   categories: Category[] = [];
   host: string = this.fileService.host;
@@ -21,8 +20,16 @@ export class ContentComponent implements OnInit {
 
   // Category colors for visual distinction
   private readonly categoryColors: string[] = [
-    '#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FECA57',
-    '#FF9FF3', '#54A0FF', '#5F27CD', '#10AC84', '#EE5A24'
+    '#FF6B6B',
+    '#4ECDC4',
+    '#45B7D1',
+    '#96CEB4',
+    '#FECA57',
+    '#FF9FF3',
+    '#54A0FF',
+    '#5F27CD',
+    '#10AC84',
+    '#EE5A24',
   ];
 
   constructor(
@@ -30,7 +37,7 @@ export class ContentComponent implements OnInit {
     private readonly router: Router,
     private readonly fileService: FileService,
     private readonly categoryService: CategoryService
-    ) { }
+  ) {}
 
   ngOnInit(): void {
     this.getCategories();
@@ -49,7 +56,16 @@ export class ContentComponent implements OnInit {
       this.products = response;
       this.loading = false;
       console.log('Products loaded:', response);
-      console.log('Sample product categories:', response.slice(0, 3).map(p => ({ title: p.title, category: p.category })));
+      if (Array.isArray(response)) {
+        console.log(
+          'Sample product categories:',
+          response
+            .slice(0, 3)
+            .map((p) => ({ title: p.title, category: p.category }))
+        );
+      } else {
+        console.warn('Products response is not an array:', response);
+      }
     });
   }
 
@@ -82,7 +98,9 @@ export class ContentComponent implements OnInit {
   // Helper method to get all images from semicolon-separated thumbnailUrl
   getAllImages(product: Product): string[] {
     if (!product.thumbnailUrl) return [];
-    return product.thumbnailUrl.split(';').filter(img => img && img.trim() !== '');
+    return product.thumbnailUrl
+      .split(';')
+      .filter((img) => img && img.trim() !== '');
   }
 
   // Track by function for better performance with ngFor
@@ -119,8 +137,8 @@ export class ContentComponent implements OnInit {
   // Get product count for a specific category
   getCategoryProductCount(categoryId: number): number {
     const categoryIdAsString = categoryId.toString();
-    return this.products.filter((product: Product) =>
-      product.category === categoryIdAsString
+    return this.products.filter(
+      (product: Product) => product.category === categoryIdAsString
     ).length;
   }
 
@@ -137,7 +155,9 @@ export class ContentComponent implements OnInit {
 
   // Scroll functionality for category navigation
   scrollCategories(direction: 'left' | 'right'): void {
-    const container = document.querySelector('.category-scroll-container') as HTMLElement;
+    const container = document.querySelector(
+      '.category-scroll-container'
+    ) as HTMLElement;
     if (!container) return;
 
     const scrollAmount = 200;
@@ -146,14 +166,13 @@ export class ContentComponent implements OnInit {
     if (direction === 'left') {
       container.scrollTo({
         left: currentScroll - scrollAmount,
-        behavior: 'smooth'
+        behavior: 'smooth',
       });
     } else {
       container.scrollTo({
         left: currentScroll + scrollAmount,
-        behavior: 'smooth'
+        behavior: 'smooth',
       });
     }
   }
-
 }
