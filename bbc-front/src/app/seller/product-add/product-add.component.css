@@ -1,0 +1,246 @@
+/* Upload Zone Styles */
+.upload-zone {
+    border: 2px dashed #dee2e6;
+    border-radius: 12px;
+    padding: 3rem 2rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-color: #f8f9fa;
+    margin-bottom: 1rem;
+}
+
+.upload-zone:hover {
+    border-color: #0d6efd;
+    background-color: rgba(13, 110, 253, 0.05);
+}
+
+.upload-zone.dragover {
+    border-color: #0d6efd;
+    background-color: rgba(13, 110, 253, 0.1);
+    transform: scale(1.02);
+}
+
+.upload-zone-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.upload-zone-content h6 {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.upload-zone-content p {
+    margin-bottom: 0.5rem;
+}
+
+.upload-zone-content .text-primary {
+    font-weight: 600;
+    text-decoration: underline;
+}
+
+/* Multi-Image Gallery Styles */
+.image-gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 15px;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+}
+
+.image-preview-item {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    border: 2px solid #e0e6ed;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #f8f9fa;
+    animation: fadeInScale 0.3s ease;
+    cursor: move;
+    transition: all 0.3s ease;
+}
+
+.image-preview-item:hover {
+    border-color: #0d6efd;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.preview-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.preview-image:hover {
+    transform: scale(1.05);
+}
+
+.remove-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background-color: rgba(220, 53, 69, 0.9);
+    color: white;
+    font-size: 12px;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease;
+}
+
+.remove-btn:hover {
+    background-color: #dc3545;
+    transform: scale(1.1);
+}
+
+/* Image Order Number */
+.image-order-number {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    width: 20px;
+    height: 20px;
+    background-color: rgba(13, 110, 253, 0.9);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: bold;
+    z-index: 2;
+}
+
+/* Drag Handle */
+.drag-handle {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    width: 20px;
+    height: 20px;
+    background-color: rgba(108, 117, 125, 0.9);
+    color: white;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    cursor: move;
+    transition: background-color 0.2s ease;
+}
+
+.drag-handle:hover {
+    background-color: rgba(108, 117, 125, 1);
+}
+
+/* Drag States */
+.image-preview-item[draggable="true"]:active {
+    opacity: 0.7;
+    transform: rotate(5deg);
+}
+
+/* Upload Progress Styles */
+.upload-progress {
+    margin-top: 15px;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+}
+
+.progress-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+    padding: 8px 12px;
+    background-color: white;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.progress-item:last-child {
+    margin-bottom: 0;
+}
+
+.progress-filename {
+    flex: 1;
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-right: 15px;
+    color: #495057;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
+}
+
+.progress-bar {
+    width: 120px;
+    height: 6px;
+    background-color: #e9ecef;
+    border-radius: 3px;
+    overflow: hidden;
+    margin-right: 10px;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #28a745, #20c997);
+    transition: width 0.3s ease;
+    border-radius: 3px;
+}
+
+.progress-percentage {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #28a745;
+    min-width: 35px;
+    text-align: right;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .image-gallery {
+        gap: 8px;
+    }
+    
+    .image-preview-item {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .remove-btn {
+        width: 20px;
+        height: 20px;
+        font-size: 10px;
+    }
+}
+
+/* Animation for new images */
+@keyframes fadeInScale {
+    0% {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}

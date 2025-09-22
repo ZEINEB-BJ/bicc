@@ -1,0 +1,192 @@
+<div class="page-content">
+    <div class="page-wrapper">
+        <section class="checkout-page">
+            <div class="container">
+                <form (submit)="placeOrder()">
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <h3 class="from-title">Order Conformation</h3>
+                            <hr>
+                            <div class="row mt-3 g-3">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="text" id="full-name" name="full-name" class="form-control"
+                                            placeholder="Full Name" [(ngModel)]="customerName">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="email" id="emailAddress" name="email" class="form-control"
+                                            placeholder="Email Address" [(ngModel)]="customerEmail">
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <h5 class="mt-2">Shipping Address</h5>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <select #_div class="form-select" name="state" id="state"
+                                            (change)="onDivisionSelect(_div.value)">
+                                            <option value="">Select Division</option>
+                                            <option *ngFor="let div of divisions" value="{{div.id}}">{{div.name}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <select #_dis class="form-select" name="city" id="city"
+                                            (change)="onDistrictSelect(_dis.value)">
+                                            <option value="">Select District</option>
+                                            <option *ngFor="let dis of selectedDistricts" value="{{dis.id}}">
+                                                {{dis.name}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 d-flex align-items-center mt-3">
+                                    <h6 class="d-inline">Select Delivery Mehtod : </h6>
+                                    <div class="form-check form-check-inline">
+                                        <input class="btn-check" checked type="radio" name="ship-method"
+                                            id="home-delivery" (click)="onShippingSelected('h')">
+                                        <label class="btn" for="home-delivery">Home Delivery</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="btn-check" type="radio" name="ship-method" id="collection-point"
+                                            (click)="onShippingSelected('c')">
+                                        <label class="btn" for="collection-point">Collection Point</label>
+                                    </div>
+                                </div>
+                                <div class="mt-0 row g-3" *ngIf="homeDelivery">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input type="text" id="zip" name="zip" class="form-control"
+                                                placeholder="Post Code" [(ngModel)]="shippingPostCode">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input type="text" id="street-name" name="street-name" class="form-control"
+                                                placeholder="House, street name" [(ngModel)]="shippingStreet">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12" *ngIf="collectionPoint">
+                                    <div class="form-group mt-2">
+                                        <select #_col class="form-select" name="collection" id="collection"
+                                            (change)="onCollectionSelect(_col.value)">
+                                            <option value="-1">Select a collection point</option>
+                                            <option *ngFor="let item of collectionPoints; let i = index"
+                                                value="{{ i }}">
+                                                {{ item.name.concat(', ').concat(item.address) }}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div>
+                                    <p class="d-inline">Your estimated delivery date is {{ deliveryDate }}. <span
+                                            *ngIf="homeDelivery"> Want a specific delivery date? </span></p>
+                                    <input *ngIf="homeDelivery" class="form-control" type="date" name="deliveryDate"
+                                        [(ngModel)]="deliveryDate">
+                                </div>
+                                <div class="col-lg-12">
+                                    <h5 class="mt-3">Order Notes (optional)</h5>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <textarea name="order-note" id="order-note" class="form-control" rows="5"
+                                            placeholder="Notes about your order, e.g. special notes for delivery."></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-lg-4">
+
+                            <h3 class="from-title mb-25">Order Summary</h3>
+                            <hr>
+                            <div class="package-summary mt-35 mb-25">
+                                <table>
+                                    <tbody>
+                                        <tr *ngFor="let item of cartItems">
+                                            <td>{{item.productName}} <strong>× {{item.productQuantity}}</strong></td>
+                                            <td class="text-end">{{item.subTotal.toFixed(2)}}TND</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Shipping Charge</td>
+                                            <td class="text-end">{{shippingCharge.toFixed(2)}}TND</td>
+                                        </tr>
+                                        <tr *ngIf="gatewayFee > 0">
+                                            <td>Gateway Fee - {{gatewayFeeReason}}</td>
+                                            <td class="text-end">{{gatewayFee.toFixed(2)}}TND</td>
+                                        </tr>
+                                        <tr *ngIf="tax > 0">
+                                            <td>Tax (5%)</td>
+                                            <td class="text-end">{{tax.toFixed(2)}}TND</td>
+                                        </tr>
+                                        <tr *ngIf="discount > 0">
+                                            <td>Discount {{discountReason}}</td>
+                                            <td class="text-end">{{discount.toFixed(2)}}-TND</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Order Total</strong></td>
+                                            <td class="text-end"><strong>{{orderTotal.toFixed(2)}}TND</strong></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="row mt-2 g-2">
+                                <h6 class="mt-2 mb-0">Use Coupon</h6>
+                                <div class="col-md-8">
+                                    <div class="form-group">
+                                        <input type="text" id="holder-name" name="holder-name" class="form-control"
+                                            placeholder="Coupon Code" [(ngModel)]="couponCode">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <button (click)="applyCoupon()" class="btn btn-outline-primary w-100">Apply</button>
+                                </div>
+                            </div>
+                            <h5 class="title mt-2 mb-2">Payment Method</h5>
+                            <div class="form-group">
+                                <select #_payment class="form-select" name="payment" id="payment"
+                                    (change)="onPaymentMethod(_payment.value)">
+                                    <option value="">Choose an Option</option>
+                                    <option value="COD">Cash on Delivery</option>
+                                    <option value="Card">Card</option>
+                                    <option value="bKash">bKash</option>
+                                </select>
+                            </div>
+                            <div *ngIf="cardForm" class="row mt-1 g-2">
+                                <h6 class="mt-2 mb-0">Card Details</h6>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <input type="text" id="holder-name" name="holder-name" class="form-control"
+                                            placeholder="Holder Name" [(ngModel)]="cardHolderName">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <input type="text" id="card-number" name="card-number" class="form-control"
+                                            placeholder="Card Number" [(ngModel)]="cardNumber">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="text" id="card-cvv" name="card-cvv" class="form-control"
+                                            placeholder="CVV" [(ngModel)]="cardCvv">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="text" id="card-number" name="card-expiry" class="form-control"
+                                            placeholder="Expiry MM/YY" [(ngModel)]="cardExpiryDate">
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary mt-3 w-100">Place Order</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </div>
+</div>
