@@ -21,11 +21,12 @@ export interface GeminiResponse {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ChatbotService {
   private readonly API_KEY = 'YOUR_GEMINI_API_KEY'; // Replace with your actual API key
-  private readonly API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent';
+  private readonly API_URL =
+    'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent';
 
   private messagesSubject = new BehaviorSubject<ChatMessage[]>([]);
   public messages$ = this.messagesSubject.asObservable();
@@ -40,9 +41,9 @@ export class ChatbotService {
   private initializeChat(): void {
     const welcomeMessage: ChatMessage = {
       id: this.generateId(),
-      text: 'Hello! 👋 Welcome to BICC Shop! I\'m your shopping assistant. How can I help you today?',
+      text: "Bonjour ! 👋 Bienvenue sur BICC Shop ! Je suis votre assistant(e) d'achat. Comment puis-je vous aider aujourd'hui ?",
       sender: 'bot',
-      timestamp: new Date()
+      timestamp: new Date(),
     };
     this.messagesSubject.next([welcomeMessage]);
   }
@@ -53,35 +54,42 @@ export class ChatbotService {
       id: this.generateId(),
       text: userMessage,
       sender: 'user',
-      timestamp: new Date()
+      timestamp: new Date(),
     };
 
     // Add typing indicator
     const typingMsg: ChatMessage = {
       id: this.generateId(),
-      text: 'Typing...',
+      text: 'Rédaction en cours...',
       sender: 'bot',
       timestamp: new Date(),
-      isTyping: true
+      isTyping: true,
     };
 
     const currentMessages = this.messagesSubject.value;
     this.messagesSubject.next([...currentMessages, userMsg, typingMsg]);
 
     const headers = new HttpHeaders({
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     });
 
     const body = {
-      contents: [{
-        parts: [{
-          text: this.formatPrompt(userMessage)
-        }]
-      }]
+      contents: [
+        {
+          parts: [
+            {
+              text: this.formatPrompt(userMessage),
+            },
+          ],
+        },
+      ],
     };
 
-    return new Observable(observer => {
-      this.http.post<GeminiResponse>(`${this.API_URL}?key=${this.API_KEY}`, body, { headers })
+    return new Observable((observer) => {
+      this.http
+        .post<GeminiResponse>(`${this.API_URL}?key=${this.API_KEY}`, body, {
+          headers,
+        })
         .subscribe({
           next: (response) => {
             this.handleBotResponse(response);
@@ -92,39 +100,43 @@ export class ChatbotService {
             console.error('Chatbot API error:', error);
             this.handleError();
             observer.error(error);
-          }
+          },
         });
     });
   }
 
   private formatPrompt(userMessage: string): string {
-    return `You are a helpful e-commerce shopping assistant for BICC Shop.
-    You help customers with:
-    - Product inquiries and recommendations
-    - Order status and tracking
-    - Shipping and delivery questions
-    - Payment and billing support
-    - Return and refund policies
-    - General shopping assistance
+    return `Tu es un(e) assistant(e) d'achat e-commerce pour BICC Shop.
+    Tu aides les clients à :
+    - Trouver des produits et faire des recommandations
+    - Suivre et comprendre le statut de leurs commandes
+    - Répondre aux questions sur la livraison
+    - Aider pour le paiement et la facturation
+    - Expliquer les politiques de retour et de remboursement
+    - Fournir une assistance générale pour le shopping
 
-    Please provide helpful, friendly, and concise responses.
-    If you don't know specific details about the store's policies, acknowledge it politely and suggest contacting customer support.
+    Merci de répondre de façon utile, amicale et concise.
+    Si tu ne connais pas la réponse exacte, invite poliment le client à contacter le support.
 
-    User question: ${userMessage}`;
+    Question de l'utilisateur : ${userMessage}`;
   }
 
   private handleBotResponse(response: GeminiResponse): void {
     const currentMessages = this.messagesSubject.value;
     // Remove typing indicator
-    const messagesWithoutTyping = currentMessages.filter(msg => !msg.isTyping);
+    const messagesWithoutTyping = currentMessages.filter(
+      (msg) => !msg.isTyping
+    );
 
-    const botText = response.candidates?.[0]?.content?.parts?.[0]?.text || 'Sorry, I couldn\'t process that request. Please try again.';
+    const botText =
+      response.candidates?.[0]?.content?.parts?.[0]?.text ||
+      "Désolé, je n'ai pas pu traiter cette demande. Veuillez réessayer.";
 
     const botMessage: ChatMessage = {
       id: this.generateId(),
       text: botText,
       sender: 'bot',
-      timestamp: new Date()
+      timestamp: new Date(),
     };
 
     this.messagesSubject.next([...messagesWithoutTyping, botMessage]);
@@ -132,13 +144,15 @@ export class ChatbotService {
 
   private handleError(): void {
     const currentMessages = this.messagesSubject.value;
-    const messagesWithoutTyping = currentMessages.filter(msg => !msg.isTyping);
+    const messagesWithoutTyping = currentMessages.filter(
+      (msg) => !msg.isTyping
+    );
 
     const errorMessage: ChatMessage = {
       id: this.generateId(),
-      text: 'Sorry, I\'m having trouble connecting right now. Please try again later or contact our support team.',
+      text: 'Désolé, je rencontre un problème de connexion. Veuillez réessayer plus tard ou contacter notre support.',
       sender: 'bot',
-      timestamp: new Date()
+      timestamp: new Date(),
     };
 
     this.messagesSubject.next([...messagesWithoutTyping, errorMessage]);

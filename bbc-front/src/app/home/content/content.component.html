@@ -1,16 +1,11 @@
 <div class="page-wrapper">
-
   <!-- Enhanced Category Menu Section -->
   <section class="category-section" *ngIf="!loading">
     <div class="container">
       <div class="category-menu-enhanced">
-
-
         <!-- Category Navigation -->
         <div class="category-navigation">
           <div class="category-scroll-wrapper">
-
-
             <div class="category-scroll-container" #categoryContainer>
               <!-- All Products Button -->
               <button
@@ -20,7 +15,7 @@
                 <div class="category-icon">
                   <i class="bi bi-grid-3x3-gap-fill"></i>
                 </div>
-                <span class="category-text">All Products</span>
+                <span class="category-text">Tous les produits</span>
               </button>
 
               <!-- Category Items -->
@@ -36,13 +31,15 @@
               </button>
             </div>
 
-            <button class="scroll-btn scroll-right" (click)="scrollCategories('right')" *ngIf="showScrollButtons">
+            <button
+              class="scroll-btn scroll-right"
+              (click)="scrollCategories('right')"
+              *ngIf="showScrollButtons"
+            >
               <i class="bi bi-chevron-right"></i>
             </button>
           </div>
         </div>
-
-
       </div>
     </div>
   </section>
@@ -118,8 +115,6 @@
     </div>
   </section>
 
-
-
   <!-- Loading Section -->
   <section class="container" *ngIf="loading">
     <div class="text-center py-5">
@@ -142,7 +137,7 @@
           d="M19.0765 9.48063H12.1242L15.5905 0L5 14.5194H11.9522L8.48592 24L19.0765 9.48063Z"
         ></path>
       </svg>
-      <h2 class="fw-bold fs-3 m-0">Recommended</h2>
+      <h2 class="fw-bold fs-3 m-0">Recommandée</h2>
     </div>
     <div
       class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 row-cols-xxl-5 product-grid"
@@ -170,11 +165,11 @@
           <div class="card-body">
             <h6 class="card-title cursor-pointer">{{ p.title }}</h6>
             <div class="clearfix">
-              <p class="mb-0 float-start"><strong>134</strong> Sales</p>
+              <p class="mb-0 float-start"><strong>134</strong> Ventes</p>
               <p class="mb-0 float-end fw-bold">
                 <span class="me-2 text-decoration-line-through text-secondary"
                   >{{ p.regularPrice }} TND</span
-                ><span>{{ p.salePrice }}TND</span>
+                ><span>{{ p.salePrice }} TND</span>
               </p>
             </div>
             <div class="d-flex align-items-center mt-3 fs-6">
@@ -192,13 +187,10 @@
       </div>
     </div>
 
-    <div
-      *ngIf="products.length === 0"
-      class="text-center py-5"
-    >
-      <h4 class="text-muted">No products found</h4>
+    <div *ngIf="products.length === 0" class="text-center py-5">
+      <h4 class="text-muted">Aucun produit trouvé</h4>
       <p class="text-muted">
-        Please check back later for new products.
+        Revenez plus tard pour découvrir de nouveaux produits.
       </p>
     </div>
   </section>
