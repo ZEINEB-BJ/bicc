@@ -26,7 +26,7 @@
 			<staticText>
 				<reportElement style="Title" x="0" y="13" width="263" height="33" uuid="bcf29663-c4b8-483e-a197-e5f6920fd2a2"/>
 				<textElement verticalAlignment="Middle"/>
-				<text><![CDATA[Product Details]]></text>
+				<text><![CDATA[Détails du produit]]></text>
 			</staticText>
 		</band>
 	</title>
@@ -48,7 +48,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Product Name]]></text>
+				<text><![CDATA[Nom du produit]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="111" y="0" width="111" height="36" backcolor="#D1C9C9" uuid="fe5c6aae-544e-470a-9f96-b0a3225955f2"/>
@@ -61,7 +61,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Regular Price]]></text>
+				<text><![CDATA[Prix normal]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="222" y="0" width="111" height="36" backcolor="#D1C9C9" uuid="ac570e36-d465-4932-9c3f-6c91c3084f4e"/>
@@ -74,7 +74,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Sale Price]]></text>
+				<text><![CDATA[Prix du vente]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="333" y="0" width="111" height="36" backcolor="#D1C9C9" uuid="ea9284f3-4fd0-47dd-a9f7-e1e2e998e97b"/>
@@ -100,7 +100,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Sales]]></text>
+				<text><![CDATA[Ventes]]></text>
 			</staticText>
 		</band>
 	</columnHeader>

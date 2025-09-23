@@ -28,7 +28,7 @@
 					<textElement>
 						<font size="34" isBold="true"/>
 					</textElement>
-					<text><![CDATA[Top Selling Product]]></text>
+					<text><![CDATA[Top Selling : Produit]]></text>
 				</staticText>
 			</frame>
 		</band>
@@ -54,7 +54,7 @@
 					<font size="11" isBold="true"/>
 					<paragraph leftIndent="3"/>
 				</textElement>
-				<text><![CDATA[Product Name]]></text>
+				<text><![CDATA[Nom du produit]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="185" y="0" width="185" height="30" backcolor="#B8ACF2" uuid="7248606f-10d5-4bcc-a1ee-0d0e32ea9f7f">
@@ -70,7 +70,7 @@
 					<font size="11" isBold="true"/>
 					<paragraph leftIndent="3"/>
 				</textElement>
-				<text><![CDATA[Category]]></text>
+				<text><![CDATA[Catégorie]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="370" y="0" width="185" height="30" backcolor="#B8ACF2" uuid="dafbf773-7389-45a8-a765-77983ad14f1c">
@@ -86,7 +86,7 @@
 					<font size="11" isBold="true"/>
 					<paragraph leftIndent="3"/>
 				</textElement>
-				<text><![CDATA[Total Sales]]></text>
+				<text><![CDATA[Total des ventes]]></text>
 			</staticText>
 		</band>
 	</columnHeader>

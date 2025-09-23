@@ -26,11 +26,11 @@
 			<frame>
 				<reportElement mode="Opaque" x="-20" y="-20" width="595" height="92" backcolor="#006699" uuid="7d2a1561-9ddd-44f3-8c54-c26047c11f30"/>
 				<staticText>
-					<reportElement x="20" y="0" width="234" height="91" forecolor="#FFFFFF" uuid="00922e06-a6ef-46b2-8f6d-00931425339a"/>
+					<reportElement x="20" y="0" width="400" height="91" forecolor="#FFFFFF" uuid="00922e06-a6ef-46b2-8f6d-00931425339a"/>
 					<textElement>
 						<font size="34" isBold="true"/>
 					</textElement>
-					<text><![CDATA[Sales Report by Vendor]]></text>
+					<text><![CDATA[Rapport des ventes par vendeur]]></text>
 				</staticText>
 			</frame>
 		</band>
@@ -56,7 +56,7 @@
 					<font size="11" isBold="true"/>
 					<paragraph leftIndent="3"/>
 				</textElement>
-				<text><![CDATA[Store Name]]></text>
+				<text><![CDATA[Nom du magasin]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="111" y="0" width="111" height="30" backcolor="#B8ACF2" uuid="033ccde1-4ab5-49f8-b673-45f410c7a830">
@@ -72,7 +72,7 @@
 					<font size="11" isBold="true"/>
 					<paragraph leftIndent="3"/>
 				</textElement>
-				<text><![CDATA[Sales Item]]></text>
+				<text><![CDATA[Produit vendu]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="222" y="0" width="111" height="30" backcolor="#B8ACF2" uuid="7248606f-10d5-4bcc-a1ee-0d0e32ea9f7f">
@@ -88,7 +88,7 @@
 					<font size="11" isBold="true"/>
 					<paragraph leftIndent="3"/>
 				</textElement>
-				<text><![CDATA[Revenue]]></text>
+				<text><![CDATA[Revenus]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="333" y="0" width="111" height="30" backcolor="#B8ACF2" uuid="dafbf773-7389-45a8-a765-77983ad14f1c">
@@ -104,7 +104,7 @@
 					<font size="11" isBold="true"/>
 					<paragraph leftIndent="3"/>
 				</textElement>
-				<text><![CDATA[Seller Profit]]></text>
+				<text><![CDATA[Bénéfice du vendeur]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="444" y="0" width="111" height="30" backcolor="#B8ACF2" uuid="911818ad-fb61-4e1d-8d08-85232eb2d0ba">
@@ -120,7 +120,7 @@
 					<font size="11" isBold="true"/>
 					<paragraph leftIndent="3"/>
 				</textElement>
-				<text><![CDATA[Platform Commision]]></text>
+				<text><![CDATA[Commission de la plateforme]]></text>
 			</staticText>
 		</band>
 	</columnHeader>

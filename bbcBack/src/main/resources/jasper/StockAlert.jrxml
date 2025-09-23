@@ -29,7 +29,7 @@
 					<textElement>
 						<font size="34" isBold="true"/>
 					</textElement>
-					<text><![CDATA[Stock Alert]]></text>
+					<text><![CDATA[Alerte de stock]]></text>
 				</staticText>
 			</frame>
 		</band>
@@ -55,7 +55,7 @@
 					<font size="11" isBold="true"/>
 					<paragraph leftIndent="3"/>
 				</textElement>
-				<text><![CDATA[SKU]]></text>
+				<text><![CDATA[UGS]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="141" y="0" width="138" height="30" backcolor="#B8ACF2" uuid="033ccde1-4ab5-49f8-b673-45f410c7a830">
@@ -71,7 +71,7 @@
 					<font size="11" isBold="true"/>
 					<paragraph leftIndent="3"/>
 				</textElement>
-				<text><![CDATA[Product Name]]></text>
+				<text><![CDATA[Nom du produit]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="279" y="0" width="138" height="30" backcolor="#B8ACF2" uuid="7248606f-10d5-4bcc-a1ee-0d0e32ea9f7f">
@@ -87,7 +87,7 @@
 					<font size="11" isBold="true"/>
 					<paragraph leftIndent="3"/>
 				</textElement>
-				<text><![CDATA[Category]]></text>
+				<text><![CDATA[Catégorie]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="417" y="0" width="138" height="30" backcolor="#B8ACF2" uuid="dafbf773-7389-45a8-a765-77983ad14f1c">

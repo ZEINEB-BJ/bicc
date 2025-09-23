@@ -23,9 +23,9 @@
 				<imageExpression><![CDATA["src/main/resources/jasper/leaf_banner_violet.png"]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement style="Title" x="0" y="13" width="263" height="33" uuid="bcf29663-c4b8-483e-a197-e5f6920fd2a2"/>
+				<reportElement style="Title" x="0" y="13" width="400" height="33" uuid="bcf29663-c4b8-483e-a197-e5f6920fd2a2"/>
 				<textElement verticalAlignment="Middle"/>
-				<text><![CDATA[Favorite Item Rank]]></text>
+				<text><![CDATA[Classement des articles favoris]]></text>
 			</staticText>
 		</band>
 	</title>
@@ -47,7 +47,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Product Name]]></text>
+				<text><![CDATA[Nom du produit]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="141" y="0" width="138" height="36" backcolor="#D1C9C9" uuid="fe5c6aae-544e-470a-9f96-b0a3225955f2"/>
@@ -60,7 +60,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Regular Price]]></text>
+				<text><![CDATA[Prix normal]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="279" y="0" width="138" height="36" backcolor="#D1C9C9" uuid="ac570e36-d465-4932-9c3f-6c91c3084f4e"/>
@@ -73,7 +73,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Sale Price]]></text>
+				<text><![CDATA[Prix de vente]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="417" y="0" width="138" height="36" backcolor="#D1C9C9" uuid="4b07e922-6eac-4ec9-a682-366bd575db4f"/>
@@ -86,7 +86,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Favorite Count]]></text>
+				<text><![CDATA[Nombre de favoris]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
