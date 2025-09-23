@@ -13,7 +13,7 @@ import { OrderDetailsComponent } from './order-details/order-details.component';
 import { TrackOrderComponent } from './track-order/track-order.component';
 import { WishlistComponent } from './wishlist/wishlist.component';
 import { ContactUsComponent } from './contact-us/contact-us.component';
-
+import { StatusFrPipe } from './pipes/status-fr.pipe';
 
 @NgModule({
   declarations: [
@@ -25,14 +25,15 @@ import { ContactUsComponent } from './contact-us/contact-us.component';
     OrderDetailsComponent,
     TrackOrderComponent,
     WishlistComponent,
-    ContactUsComponent
+    ContactUsComponent,
+    StatusFrPipe,
   ],
   imports: [
     CommonModule,
     CustomerRoutingModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
-  ]
+    ReactiveFormsModule,
+  ],
 })
-export class CustomerModule { }
+export class CustomerModule {}

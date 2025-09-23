@@ -32,7 +32,14 @@
                   "
                   class="badge rounded-pill p-2 text-uppercase px-3"
                 >
-                  <i class="bx bxs-circle me-1"></i>{{ p.status }}
+                  <i class="bx bxs-circle me-1"></i
+                  >{{
+                    p.status == "Declined"
+                      ? "Refusé"
+                      : p.status == "Refunded"
+                      ? "Remboursé"
+                      : p.status
+                  }}
                 </div>
               </td>
             </tr>

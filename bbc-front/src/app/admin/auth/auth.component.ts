@@ -45,7 +45,9 @@ export class AuthComponent {
   // Show forgot password message
   showForgotPassword(event: Event): void {
     event.preventDefault();
-    this.showError('Veuillez contacter votre administrateur système pour réinitialiser votre mot de passe.');
+    this.showError(
+      'Veuillez contacter votre administrateur système pour réinitialiser votre mot de passe.'
+    );
   }
 
   // Clear error message
@@ -87,6 +89,12 @@ export class AuthComponent {
 
     this.isLoading = true;
     this.clearMessages();
+
+    // Clear tokens for other account types
+    localStorage.removeItem('customer-jwt');
+    localStorage.removeItem('customer-token');
+    localStorage.removeItem('seller-jwt');
+    localStorage.removeItem('seller-token');
 
     const req: AuthRequest = {
       email: loginData.email,
@@ -153,7 +161,7 @@ export class AuthComponent {
       name: signupData.name,
       email: signupData.email,
       password: signupData.password,
-      role: 'ADMIN'
+      role: 'ADMIN',
     };
 
     console.log('[SIGNUP] Payload:', admin);
@@ -164,7 +172,9 @@ export class AuthComponent {
         console.log('[SIGNUP] Response:', res);
 
         if (res && res.email) {
-          this.showSuccess('Admin inscrit avec succès! Connexion automatique...');
+          this.showSuccess(
+            'Admin inscrit avec succès! Connexion automatique...'
+          );
           setTimeout(() => {
             this.showSignup = false;
             this.onAdminLogin({ email: admin.email, password: admin.password });

@@ -19,7 +19,7 @@ import { CollectionPointsComponent } from './collection-points/collection-points
 import { ReportSalesComponent } from './report-sales/report-sales.component';
 import { RefundComponent } from './refund/refund.component';
 import { ReportComponent } from './report/report.component';
-
+import { StatusFrPipe } from './pipes/status-fr.pipe';
 
 @NgModule({
   declarations: [
@@ -38,12 +38,9 @@ import { ReportComponent } from './report/report.component';
     CollectionPointsComponent,
     ReportSalesComponent,
     RefundComponent,
-    ReportComponent
+    ReportComponent,
+    StatusFrPipe,
   ],
-  imports: [
-    CommonModule,
-    AdminRoutingModule,
-    FormsModule
-  ]
+  imports: [CommonModule, AdminRoutingModule, FormsModule],
 })
-export class AdminModule { }
+export class AdminModule {}

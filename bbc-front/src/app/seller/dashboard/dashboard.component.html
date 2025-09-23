@@ -138,7 +138,20 @@
                       : 'bg-gradient-quepal'
                   "
                   class="badge text-white shadow-sm w-100 py-2"
-                  >{{ o.status }}
+                >
+                  {{
+                    o.status == "Canceled"
+                      ? "Annulée"
+                      : o.status == "Processing"
+                      ? "En traitement"
+                      : o.status == "Completed"
+                      ? "Terminée"
+                      : o.status == "Shipped"
+                      ? "Expédiée"
+                      : o.status == "Pending"
+                      ? "En attente"
+                      : o.status
+                  }}
                 </span>
               </td>
               <td>{{ o.orderTotal }}</td>

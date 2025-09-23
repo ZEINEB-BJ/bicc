@@ -9,10 +9,9 @@ import { CategoryService } from 'src/app/services/category.service';
 @Component({
   selector: 'app-category-products',
   templateUrl: './category-products.component.html',
-  styleUrls: ['./category-products.component.css']
+  styleUrls: ['./category-products.component.css'],
 })
 export class CategoryProductsComponent implements OnInit {
-
   products: Product[] = [];
   allProducts: Product[] = [];
   filteredProducts: Product[] = [];
@@ -30,11 +29,11 @@ export class CategoryProductsComponent implements OnInit {
   // Sort properties
   sortBy: string = 'default';
   sortOptions = [
-    { value: 'default', label: 'Default' },
-    { value: 'price-low', label: 'Price: Low to High' },
-    { value: 'price-high', label: 'Price: High to Low' },
-    { value: 'name', label: 'Name: A to Z' },
-    { value: 'discount', label: 'Highest Discount' }
+    { value: 'default', label: 'Par défaut' },
+    { value: 'price-low', label: 'Prix croissant' },
+    { value: 'price-high', label: 'Prix décroissant' },
+    { value: 'name', label: 'Nom : A à Z' },
+    { value: 'discount', label: 'Remise la plus élevée' },
   ];
 
   constructor(
@@ -43,10 +42,10 @@ export class CategoryProductsComponent implements OnInit {
     private readonly route: ActivatedRoute,
     private readonly fileService: FileService,
     private readonly categoryService: CategoryService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
+    this.route.params.subscribe((params) => {
       this.categoryId = params['id'] ? parseInt(params['id']) : null;
       if (this.categoryId) {
         this.loadCategoryAndProducts();
@@ -61,7 +60,8 @@ export class CategoryProductsComponent implements OnInit {
 
     // Load category details
     this.categoryService.getCategories().subscribe((categories) => {
-      this.category = categories.find(cat => cat.id === this.categoryId) || null;
+      this.category =
+        categories.find((cat) => cat.id === this.categoryId) || null;
 
       // Load products
       this.customerService.getProducts().subscribe((products) => {
@@ -69,8 +69,8 @@ export class CategoryProductsComponent implements OnInit {
 
         if (this.categoryId) {
           const categoryIdAsString = this.categoryId.toString();
-          this.filteredProducts = products.filter(product =>
-            product.category === categoryIdAsString
+          this.filteredProducts = products.filter(
+            (product) => product.category === categoryIdAsString
           );
         } else {
           this.filteredProducts = products;
@@ -79,7 +79,10 @@ export class CategoryProductsComponent implements OnInit {
         this.initializePriceRange();
         this.applyPriceFilter();
         this.loading = false;
-        console.log(`Loaded ${this.products.length} products for category:`, this.category?.title);
+        console.log(
+          `Loaded ${this.products.length} products for category:`,
+          this.category?.title
+        );
       });
     });
   }
@@ -138,22 +141,23 @@ export class CategoryProductsComponent implements OnInit {
       return;
     }
 
-    const prices = this.filteredProducts.map(product => product.salePrice);
+    const prices = this.filteredProducts.map((product) => product.salePrice);
     this.minPrice = Math.floor(Math.min(...prices));
     this.maxPrice = Math.ceil(Math.max(...prices));
 
     // Set initial range to show all products
     this.priceRange = {
       min: this.minPrice,
-      max: this.maxPrice
+      max: this.maxPrice,
     };
   }
 
   // Apply price filter to products
   applyPriceFilter(): void {
-    this.products = this.filteredProducts.filter(product =>
-      product.salePrice >= this.priceRange.min &&
-      product.salePrice <= this.priceRange.max
+    this.products = this.filteredProducts.filter(
+      (product) =>
+        product.salePrice >= this.priceRange.min &&
+        product.salePrice <= this.priceRange.max
     );
     this.applySorting();
   }
@@ -172,7 +176,7 @@ export class CategoryProductsComponent implements OnInit {
   resetPriceFilter(): void {
     this.priceRange = {
       min: this.minPrice,
-      max: this.maxPrice
+      max: this.maxPrice,
     };
     this.applyPriceFilter();
   }
@@ -184,31 +188,58 @@ export class CategoryProductsComponent implements OnInit {
 
   // Check if price filter is active
   isPriceFilterActive(): boolean {
-    return this.priceRange.min !== this.minPrice || this.priceRange.max !== this.maxPrice;
+    return (
+      this.priceRange.min !== this.minPrice ||
+      this.priceRange.max !== this.maxPrice
+    );
   }
 
   // Get filter summary text
   getFilterSummaryText(): string {
     if (this.isPriceFilterActive()) {
-      return `Filtered by price: ${this.getPriceRangeText()} (${this.products.length} products)`;
+      return `Filtered by price: ${this.getPriceRangeText()} (${
+        this.products.length
+      } products)`;
     }
     return '';
   }
 
   // Quick filter presets
-  getQuickFilterPresets(): { label: string, min: number, max: number }[] {
+  getQuickFilterPresets(): { label: string; min: number; max: number }[] {
     const range = this.maxPrice - this.minPrice;
     return [
-      { label: 'Budget', min: this.minPrice, max: this.minPrice + Math.round(range * 0.3) },
-      { label: 'Mid-Range', min: this.minPrice + Math.round(range * 0.3), max: this.minPrice + Math.round(range * 0.7) },
-      { label: 'Premium', min: this.minPrice + Math.round(range * 0.7), max: this.maxPrice },
-      { label: 'Under 50', min: this.minPrice, max: Math.min(50, this.maxPrice) },
-      { label: 'Under 100', min: this.minPrice, max: Math.min(100, this.maxPrice) },
-    ].filter(preset => preset.min < preset.max && preset.max <= this.maxPrice);
+      {
+        label: 'Budget',
+        min: this.minPrice,
+        max: this.minPrice + Math.round(range * 0.3),
+      },
+      {
+        label: 'Mid-Range',
+        min: this.minPrice + Math.round(range * 0.3),
+        max: this.minPrice + Math.round(range * 0.7),
+      },
+      {
+        label: 'Premium',
+        min: this.minPrice + Math.round(range * 0.7),
+        max: this.maxPrice,
+      },
+      {
+        label: 'Under 50',
+        min: this.minPrice,
+        max: Math.min(50, this.maxPrice),
+      },
+      {
+        label: 'Under 100',
+        min: this.minPrice,
+        max: Math.min(100, this.maxPrice),
+      },
+    ].filter(
+      (preset) => preset.min < preset.max && preset.max <= this.maxPrice
+    );
   }
 
   // Apply quick filter preset
-  applyQuickFilter(preset: { min: number, max: number }): void {
+  applyQuickFilter(preset: { min: number; max: number }): void {
     this.priceRange = { min: preset.min, max: preset.max };
     this.applyPriceFilter();
   }
@@ -227,8 +258,10 @@ export class CategoryProductsComponent implements OnInit {
         break;
       case 'discount':
         this.products.sort((a, b) => {
-          const discountA = ((a.regularPrice - a.salePrice) / a.regularPrice) * 100;
-          const discountB = ((b.regularPrice - b.salePrice) / b.regularPrice) * 100;
+          const discountA =
+            ((a.regularPrice - a.salePrice) / a.regularPrice) * 100;
+          const discountB =
+            ((b.regularPrice - b.salePrice) / b.regularPrice) * 100;
           return discountB - discountA;
         });
         break;

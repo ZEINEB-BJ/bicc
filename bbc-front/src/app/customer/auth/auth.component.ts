@@ -25,6 +25,12 @@ export class AuthComponent {
   }
 
   onCustomerLogin(customer: Customer): void {
+    // Clear tokens for other account types
+    localStorage.removeItem('seller-jwt');
+    localStorage.removeItem('seller-token');
+    localStorage.removeItem('admin-jwt');
+    localStorage.removeItem('admin-token');
+
     let req: AuthRequest = {
       email: customer.email,
       password: customer.password,

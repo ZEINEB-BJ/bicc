@@ -29,7 +29,24 @@
                   "
                   class="badge rounded-pill p-2 text-uppercase px-3"
                 >
-                  <i class="bx bxs-circle me-1"></i>{{ p.status }}
+                  <i class="bx bxs-circle me-1"></i
+                  >{{
+                    p.status == "Canceled"
+                      ? "Annulée"
+                      : p.status == "Processing"
+                      ? "En traitement"
+                      : p.status == "Completed"
+                      ? "Terminée"
+                      : p.status == "Shipped"
+                      ? "Expédiée"
+                      : p.status == "Pending"
+                      ? "En attente"
+                      : p.status == "Delivered"
+                      ? "Livrée"
+                      : p.status == "Refunded"
+                      ? "Remboursée"
+                      : p.status
+                  }}
                 </div>
               </td>
               <td>{{ p.orderTotal }}</td>

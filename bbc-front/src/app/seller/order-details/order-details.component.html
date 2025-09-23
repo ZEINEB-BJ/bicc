@@ -33,15 +33,23 @@
               <td>
                 <div
                   [class]="
-                    p.status == 'Canceled'
+                    p.status == 'Pending'
+                      ? 'text-warning bg-light-warning'
+                      : p.status == 'Canceled'
                       ? 'text-danger bg-light-danger'
+                      : p.status == 'Processing'
+                      ? 'text-info bg-light-info'
+                      : p.status == 'Shipped'
+                      ? 'text-primary bg-light-primary'
                       : p.status == 'Delivered'
                       ? 'text-success bg-light-success'
+                      : p.status == 'Refunded'
+                      ? 'text-secondary bg-light-secondary'
                       : 'text-primary bg-light-primary'
                   "
                   class="badge rounded-pill p-2 text-uppercase px-3"
                 >
-                  <i class="bx bxs-circle me-1"></i>{{ p.status }}
+                  <i class="bx bxs-circle me-1"></i>{{ p.status | statusFr }}
                 </div>
               </td>
               <td>

@@ -17,7 +17,7 @@ import { StoreComponent } from './store/store.component';
 import { ReportSalesComponent } from './report-sales/report-sales.component';
 import { RefundComponent } from './refund/refund.component';
 import { ReportComponent } from './report/report.component';
-
+import { StatusFrPipe } from './pipes/status-fr.pipe';
 
 @NgModule({
   declarations: [
@@ -33,13 +33,9 @@ import { ReportComponent } from './report/report.component';
     StoreComponent,
     ReportSalesComponent,
     RefundComponent,
-    ReportComponent
+    ReportComponent,
+    StatusFrPipe,
   ],
-  imports: [
-    CommonModule,
-    SellerRoutingModule,
-    FormsModule,
-    HttpClientModule
-  ]
+  imports: [CommonModule, SellerRoutingModule, FormsModule, HttpClientModule],
 })
-export class SellerModule { }
+export class SellerModule {}
