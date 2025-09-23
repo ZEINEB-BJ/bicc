@@ -74,7 +74,7 @@
             src="../../../assets/images/slides/slide1.jpg"
             class="d-block w-100"
             style="height: 420px"
-            alt="Product showcase slide 1"
+            alt="Présentation des produits - diapositive 1"
           />
         </div>
         <div class="carousel-item active">
@@ -82,7 +82,7 @@
             src="../../../assets/images/slides/slide2.jpg"
             class="d-block w-100"
             style="height: 420px"
-            alt="Product showcase slide 2"
+            alt="Présentation des produits - diapositive 2"
           />
         </div>
         <div class="carousel-item">
@@ -90,7 +90,7 @@
             src="../../../assets/images/slides/slide3.jpg"
             class="d-block w-100"
             style="height: 420px"
-            alt="Product showcase slide 3"
+            alt="Présentation des produits - diapositive 3"
           />
         </div>
       </div>
@@ -101,7 +101,7 @@
         data-bs-slide="prev"
       >
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
+        <span class="visually-hidden">Précédent</span>
       </button>
       <button
         class="carousel-control-next"
@@ -110,7 +110,7 @@
         data-bs-slide="next"
       >
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
+        <span class="visually-hidden">Suivant</span>
       </button>
     </div>
   </section>
@@ -119,9 +119,9 @@
   <section class="container" *ngIf="loading">
     <div class="text-center py-5">
       <output class="spinner-border text-primary" aria-live="polite">
-        <span class="visually-hidden">Loading...</span>
+        <span class="visually-hidden">Chargement...</span>
       </output>
-      <p class="mt-2">Loading categories and products...</p>
+      <p class="mt-2">Chargement des catégories et produits...</p>
     </div>
   </section>
 
@@ -149,7 +149,7 @@
         (click)="showProduct(p.id)"
         (keydown.enter)="showProduct(p.id)"
         (keydown.space)="showProduct(p.id)"
-        [attr.aria-label]="'View details for ' + p.title"
+        [attr.aria-label]="'Voir les détails pour ' + p.title"
       >
         <div class="card">
           <img
@@ -165,7 +165,7 @@
           <div class="card-body">
             <h6 class="card-title cursor-pointer">{{ p.title }}</h6>
             <div class="clearfix">
-              <p class="mb-0 float-start"><strong>134</strong> Ventes</p>
+              <p class="mb-0 float-start"><strong>134</strong> ventes</p>
               <p class="mb-0 float-end fw-bold">
                 <span class="me-2 text-decoration-line-through text-secondary"
                   >{{ p.regularPrice }} TND</span

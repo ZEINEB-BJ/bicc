@@ -7,10 +7,10 @@
           <div class="contact-icon mb-3">
             <i class="bi bi-headset display-4 text-primary"></i>
           </div>
-          <h1 class="h2 mb-3">Contact Us</h1>
+          <h1 class="h2 mb-3">Contactez-nous</h1>
           <p class="text-muted">
-            We're here to help! Submit your complaint or feedback and we'll get
-            back to you as soon as possible.
+            Nous sommes là pour vous aider ! Soumettez votre réclamation ou
+            votre avis et nous vous répondrons dans les plus brefs délais.
           </p>
         </div>
 
@@ -56,7 +56,7 @@
             <div class="row mb-4">
               <div class="col-md-6">
                 <label for="customerName" class="form-label"
-                  >Full Name <span class="text-danger">*</span></label
+                  >Nom complet <span class="text-danger">*</span></label
                 >
                 <div class="input-group">
                   <span class="input-group-text"
@@ -68,7 +68,7 @@
                     id="customerName"
                     formControlName="customerName"
                     [class.is-invalid]="submitted && f['customerName'].errors"
-                    placeholder="Enter your full name"
+                    placeholder="Entrez votre nom complet"
                   />
                 </div>
                 <div
@@ -76,17 +76,17 @@
                   *ngIf="submitted && f['customerName'].errors"
                 >
                   <div *ngIf="f['customerName'].errors?.['required']">
-                    Full name is required
+                    Le nom complet est requis
                   </div>
                   <div *ngIf="f['customerName'].errors?.['minlength']">
-                    Name must be at least 2 characters
+                    Le nom doit comporter au moins 2 caractères
                   </div>
                 </div>
               </div>
 
               <div class="col-md-6">
                 <label for="customerEmail" class="form-label"
-                  >Email Address <span class="text-danger">*</span></label
+                  >Adresse e-mail <span class="text-danger">*</span></label
                 >
                 <div class="input-group">
                   <span class="input-group-text"
@@ -98,7 +98,7 @@
                     id="customerEmail"
                     formControlName="customerEmail"
                     [class.is-invalid]="submitted && f['customerEmail'].errors"
-                    placeholder="Enter your email address"
+                    placeholder="Entrez votre adresse e-mail"
                   />
                 </div>
                 <div
@@ -106,10 +106,10 @@
                   *ngIf="submitted && f['customerEmail'].errors"
                 >
                   <div *ngIf="f['customerEmail'].errors?.['required']">
-                    Email is required
+                    L'adresse e-mail est requise
                   </div>
                   <div *ngIf="f['customerEmail'].errors?.['email']">
-                    Please enter a valid email
+                    Veuillez entrer une adresse e-mail valide
                   </div>
                 </div>
               </div>
@@ -118,7 +118,7 @@
             <!-- Customer Address -->
             <div class="mb-4">
               <label for="customerAddress" class="form-label"
-                >Address (Optional)</label
+                >Adresse (optionnel)</label
               >
               <div class="input-group">
                 <span class="input-group-text"
@@ -129,18 +129,19 @@
                   class="form-control"
                   id="customerAddress"
                   formControlName="customerAddress"
-                  placeholder="Enter your address (optional)"
+                  placeholder="Entrez votre adresse (optionnel)"
                 />
               </div>
               <div class="form-text">
-                This helps us provide better support and faster resolution.
+                Cela nous aide à mieux vous assister et à accélérer le
+                traitement.
               </div>
             </div>
 
             <!-- Subject -->
             <div class="mb-4">
               <label for="subject" class="form-label"
-                >Subject <span class="text-danger">*</span></label
+                >Objet <span class="text-danger">*</span></label
               >
               <div class="input-group">
                 <span class="input-group-text"
@@ -152,7 +153,7 @@
                   id="subject"
                   formControlName="subject"
                   [class.is-invalid]="submitted && f['subject'].errors"
-                  placeholder="Brief description of your issue"
+                  placeholder="Résumé de votre demande"
                 />
               </div>
               <div
@@ -160,10 +161,10 @@
                 *ngIf="submitted && f['subject'].errors"
               >
                 <div *ngIf="f['subject'].errors?.['required']">
-                  Subject is required
+                  L'objet est requis
                 </div>
                 <div *ngIf="f['subject'].errors?.['minlength']">
-                  Subject must be at least 5 characters
+                  L'objet doit comporter au moins 5 caractères
                 </div>
               </div>
             </div>
@@ -172,7 +173,7 @@
             <div class="row mb-4">
               <div class="col-md-6">
                 <label for="category" class="form-label"
-                  >Category <span class="text-danger">*</span></label
+                  >Catégorie <span class="text-danger">*</span></label
                 >
                 <div class="input-group">
                   <span class="input-group-text"
@@ -184,13 +185,16 @@
                     formControlName="category"
                     [class.is-invalid]="submitted && f['category'].errors"
                   >
-                    <option value="" disabled>Select a category</option>
-                    <option
-                      *ngFor="let cat of complaintCategories"
-                      [value]="cat.value"
-                    >
-                      {{ cat.label }}
+                    <option value="" disabled>
+                      Sélectionnez une catégorie
                     </option>
+                    <option value="demande-info">Demande d'information</option>
+                    <option value="reclamation">Réclamation</option>
+                    <option value="suggestion">Suggestion</option>
+                    <option value="technique">Problème technique</option>
+                    <option value="commande">Commande</option>
+                    <option value="livraison">Livraison</option>
+                    <option value="autre">Autre</option>
                   </select>
                 </div>
                 <div
@@ -198,7 +202,7 @@
                   *ngIf="submitted && f['category'].errors"
                 >
                   <div *ngIf="f['category'].errors?.['required']">
-                    Please select a category
+                    Veuillez sélectionner une catégorie
                   </div>
                   <div *ngIf="f['category'].errors?.['required']">
                     Veuillez sélectionner une catégorie
@@ -208,7 +212,7 @@
 
               <div class="col-md-6">
                 <label for="priority" class="form-label"
-                  >Priority <span class="text-danger">*</span></label
+                  >Priorité <span class="text-danger">*</span></label
                 >
                 <label for="priority" class="form-label"
                   >Priorité <span class="text-danger">*</span></label
@@ -252,7 +256,7 @@
                 *ngIf="submitted && f['description'].errors"
               >
                 <div *ngIf="f['description'].errors?.['required']">
-                  Description is required
+                  La description est requise
                 </div>
                 <div *ngIf="f['description'].errors?.['minlength']">
                   La description doit comporter au moins 20 caractères

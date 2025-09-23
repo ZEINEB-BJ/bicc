@@ -73,11 +73,13 @@
         <div class="card-body">
           <div class="d-flex align-items-center">
             <div class="me-auto">
-              <p class="mb-0 text-white">Total Revenue</p>
+              <p class="mb-0 text-white">Revenu total</p>
               <h4 class="my-1 text-white">
                 {{ stat.revenue | currency : "TND " : "symbol" : "1.0-0" }}
               </h4>
-              <p class="mb-0 font-13 text-white">+2.5% from last week</p>
+              <p class="mb-0 font-13 text-white">
+                +2,5% par rapport à la semaine dernière
+              </p>
             </div>
             <div id="chart1"></div>
           </div>
@@ -89,11 +91,13 @@
         <div class="card-body">
           <div class="d-flex align-items-center">
             <div class="me-auto">
-              <p class="mb-0 text-white">Total Profit</p>
+              <p class="mb-0 text-white">Bénéfice total</p>
               <h4 class="my-1 text-white">
                 {{ stat.profit | currency : "TND " : "symbol" : "1.0-0" }}
               </h4>
-              <p class="mb-0 font-13 text-white">+5.4% from last week</p>
+              <p class="mb-0 font-13 text-white">
+                +5,4% par rapport à la semaine dernière
+              </p>
             </div>
             <div id="chart2"></div>
           </div>
@@ -106,7 +110,7 @@
     <div class="card-header bg-transparent">
       <div class="d-flex align-items-center">
         <div>
-          <h6 class="mb-0 p-2">Recent Orders</h6>
+          <h6 class="mb-0 p-2">Commandes récentes</h6>
         </div>
       </div>
     </div>
@@ -115,10 +119,10 @@
         <table class="table align-middle mb-0">
           <thead class="table-light">
             <tr>
-              <th>Order ID</th>
-              <th>Status</th>
-              <th>Amount</th>
-              <th>Order Date</th>
+              <th>ID commande</th>
+              <th>Statut</th>
+              <th>Montant</th>
+              <th>Date de commande</th>
             </tr>
           </thead>
           <tbody>

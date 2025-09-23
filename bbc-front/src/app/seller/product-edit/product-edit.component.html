@@ -99,7 +99,7 @@
                         (click)="clearAllImages()"
                       >
                         <i class="bi bi-trash me-1"></i>
-                        Clear All
+                        Tout supprimer
                       </button>
                     </div>
 
@@ -127,7 +127,10 @@
                         >
                           <i class="bi bi-x"></i>
                         </button>
-                        <div class="drag-handle" title="Drag to reorder">
+                        <div
+                          class="drag-handle"
+                          title="Glisser pour réorganiser"
+                        >
                           <i class="bi bi-grip-vertical"></i>
                         </div>
                       </div>
@@ -160,7 +163,7 @@
                 <div class="row g-3">
                   <div class="col-md-6">
                     <label for="inputRegularPrice" class="form-label"
-                      >Regular Price</label
+                      >Prix normal</label
                     >
                     <input
                       type="number"
@@ -174,7 +177,7 @@
                   </div>
                   <div class="col-md-6">
                     <label for="inputSalePrice" class="form-label"
-                      >Sale Price</label
+                      >Prix promotionnel</label
                     >
                     <input
                       type="number"
@@ -188,7 +191,7 @@
                   </div>
                   <div class="col-12">
                     <label for="inputProductCategory" class="form-label"
-                      >Product Category</label
+                      >Catégorie du produit</label
                     >
                     <select
                       class="form-select"
@@ -208,7 +211,7 @@
                   </div>
                   <div class="col-12">
                     <label for="inputStockStatus" class="form-label"
-                      >Stock Status</label
+                      >Statut du stock</label
                     >
                     <select
                       class="form-select"
@@ -221,19 +224,19 @@
                         value="In Stock"
                         [selected]="stockStatus == 'In Stock'"
                       >
-                        In Stock
+                        En stock
                       </option>
                       <option
                         value="Out of Stock"
                         [selected]="stockStatus == 'Out of Stock'"
                       >
-                        Out of Stock
+                        Rupture de stock
                       </option>
                     </select>
                   </div>
                   <div class="col-12">
                     <label for="inputStockCount" class="form-label"
-                      >Stock Count</label
+                      >Quantité en stock</label
                     >
                     <input
                       type="number"
@@ -257,7 +260,7 @@
                   <div class="col-12">
                     <div class="d-grid">
                       <button type="submit" class="btn btn-primary">
-                        Update Product
+                        Mettre à jour le produit
                       </button>
                     </div>
                   </div>

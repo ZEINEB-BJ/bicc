@@ -1,118 +1,210 @@
 <div class="wrapper">
-    <div class="section-authentication-cover">
-        <div *ngIf="signIn" class="row g-0">
-            <div
-                class="col-12 col-xl-7 col-xxl-8 auth-cover-left align-items-center justify-content-center d-none d-xl-flex">
-                <div class="card shadow-none bg-transparent shadow-none rounded-0 mb-0">
-                    <div class="card-body">
-                        <img src="assets/images/login-images/login-cover.svg" class="img-fluid auth-img-cover-login"
-                            width="650" alt="" />
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-xl-5 col-xxl-4 auth-cover-right align-items-center justify-content-center">
-                <div class="card rounded-0 m-3 shadow-none bg-transparent mb-0">
-                    <div class="card-body p-sm-5">
-                        <div class="">
-                            <div class="text-center mb-4">
-                                <h5 class="">BICC</h5>
-                                <p class="mb-0">Please log in to your account</p>
-                            </div>
-                            <div class="form-body">
-                                <form #_form1="ngForm" (submit)="onCustomerLogin(_form1.value)" class="row g-3">
-                                    <div class="col-12">
-                                        <label for="inputEmailAddress" class="form-label">Email</label>
-                                        <input type="email" class="form-control" id="inputEmailAddress"
-                                            placeholder="jhon@example.com" name="email" ngModel>
-                                    </div>
-                                    <div class="col-12">
-                                        <label for="inputChoosePassword" class="form-label">Password</label>
-                                        <div class="input-group" id="show_hide_password">
-                                            <input type="password" class="form-control border-end-0"
-                                                id="inputChoosePassword" value="12345678" placeholder="Enter Password" name="password" ngModel>
-                                            <a href="javascript:;" class="input-group-text bg-transparent"><i
-                                                    class="bx bx-hide"></i></a>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked">
-                                            <label class="form-check-label" for="flexSwitchCheckChecked">Remember
-                                                Me</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 text-end"> <a href="authentication-forgot-password.html">Forgot
-                                            Password ?</a>
-                                    </div>
-                                    <div class="col-12">
-                                        <div class="d-grid">
-                                            <button type="submit" class="btn btn-primary">Sign in</button>
-                                        </div>
-                                    </div>
-                                    <div class="col-12">
-                                        <div class="text-center ">
-                                            <p class="mb-0">Don't have an account yet?
-                                                <span class="text-decoration-underline cursor-pointer text-primary"
-                                                    (click)="signInToggle()">Sign up here</span>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
+  <div class="section-authentication-cover">
+    <div *ngIf="signIn" class="row g-0">
+      <div
+        class="col-12 col-xl-7 col-xxl-8 auth-cover-left align-items-center justify-content-center d-none d-xl-flex"
+      >
+        <div class="card shadow-none bg-transparent shadow-none rounded-0 mb-0">
+          <div class="card-body">
+            <img
+              src="assets/images/login-images/login-cover.svg"
+              class="img-fluid auth-img-cover-login"
+              width="650"
+              alt=""
+            />
+          </div>
         </div>
-
-        <div *ngIf="!signIn" class="row g-0">
-            <div
-                class="col-12 col-xl-7 col-xxl-8 auth-cover-left align-items-center justify-content-center d-none d-xl-flex">
-                <div class="card shadow-none bg-transparent shadow-none rounded-0 mb-0">
-                    <div class="card-body">
-                        <img src="assets/images/login-images/register-cover.svg" class="img-fluid auth-img-cover-login"
-                            width="550" alt="" />
+      </div>
+      <div
+        class="col-12 col-xl-5 col-xxl-4 auth-cover-right align-items-center justify-content-center"
+      >
+        <div class="card rounded-0 m-3 shadow-none bg-transparent mb-0">
+          <div class="card-body p-sm-5">
+            <div class="">
+              <div class="text-center mb-4">
+                <h5 class="">BICC</h5>
+                <p class="mb-0">Veuillez vous connecter à votre compte</p>
+              </div>
+              <div class="form-body">
+                <form
+                  #_form1="ngForm"
+                  (submit)="onCustomerLogin(_form1.value)"
+                  class="row g-3"
+                >
+                  <div class="col-12">
+                    <label for="inputEmailAddress" class="form-label"
+                      >E-mail</label
+                    >
+                    <input
+                      type="email"
+                      class="form-control"
+                      id="inputEmailAddress"
+                      placeholder="exemple@utilisateur.com"
+                      name="email"
+                      ngModel
+                    />
+                  </div>
+                  <div class="col-12">
+                    <label for="inputChoosePassword" class="form-label"
+                      >Mot de passe</label
+                    >
+                    <div class="input-group" id="show_hide_password">
+                      <input
+                        type="password"
+                        class="form-control border-end-0"
+                        id="inputChoosePassword"
+                        value="12345678"
+                        placeholder="Entrez votre mot de passe"
+                        name="password"
+                        ngModel
+                      />
+                      <a
+                        href="javascript:;"
+                        class="input-group-text bg-transparent"
+                        ><i class="bx bx-hide"></i
+                      ></a>
                     </div>
-                </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-check form-switch">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="flexSwitchCheckChecked"
+                      />
+                      <label
+                        class="form-check-label"
+                        for="flexSwitchCheckChecked"
+                        >Se souvenir de moi</label
+                      >
+                    </div>
+                  </div>
+                  <div class="col-md-6 text-end">
+                    <a href="authentication-forgot-password.html"
+                      >Mot de passe oublié ?</a
+                    >
+                  </div>
+                  <div class="col-12">
+                    <div class="d-grid">
+                      <button type="submit" class="btn btn-primary">
+                        Se connecter
+                      </button>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <div class="text-center">
+                      <p class="mb-0">
+                        Vous n'avez pas encore de compte ?
+                        <span
+                          class="text-decoration-underline cursor-pointer text-primary"
+                          (click)="signInToggle()"
+                          >Inscrivez-vous ici</span
+                        >
+                      </p>
+                    </div>
+                  </div>
+                </form>
+              </div>
             </div>
-            <div class="col-12 col-xl-5 col-xxl-4 auth-cover-right align-items-center justify-content-center">
-                <div class="card rounded-0 m-3 shadow-none bg-transparent mb-0">
-                    <div class="card-body p-sm-5">
-                        <div class="">
-                            <div class="mb-3 text-center">
-                                <img src="assets/images/logo-icon.png" width="60" alt="" />
-                            </div>
-                            <div class="text-center mb-4">
-                                <h5 class="">BICC</h5>
-                                <p class="mb-0">Please fill the below details to create your account</p>
-                            </div>
-                            <div class="form-body">
-                                <form #_form2="ngForm" (submit)="onCustomerSignup(_form2.value)" class="row g-3">
-                                    <div class="col-12">
-                                        <label for="inputUsername" class="form-label">Full Name</label>
-                                        <input type="email" class="form-control" id="inputUsername" placeholder="Enter your name" name="name" ngModel>
-                                    </div>
-                                    <div class="col-12">
-                                        <label for="inputEmailAddress" class="form-label">Email</label>
-                                        <input type="email" class="form-control" id="inputEmailAddress"
-                                            placeholder="example@user.com" name="email" ngModel>
-                                    </div>
-                                    <div class="col-12">
-                                        <label for="inputChoosePassword" class="form-label">Password</label>
-                                        <div class="input-group" id="show_hide_password">
-                                            <input type="password" class="form-control border-end-0"
-                                                id="inputChoosePassword" placeholder="Enter Password" name="password" ngModel>
-                                            <a href="javascript:;" class="input-group-text bg-transparent"><i
-                                                    class='bx bx-hide'></i></a>
-                                        </div>
-                                    </div>
-                                    <div class="col-12">
-                                        <label for="inputAddress" class="form-label">Address</label>
-                                        <input type="text" class="form-control" id="inputAddress"
-                                            name="address" ngModel>
-                                    </div>
-                                    <!-- <div class="col-12">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="!signIn" class="row g-0">
+      <div
+        class="col-12 col-xl-7 col-xxl-8 auth-cover-left align-items-center justify-content-center d-none d-xl-flex"
+      >
+        <div class="card shadow-none bg-transparent shadow-none rounded-0 mb-0">
+          <div class="card-body">
+            <img
+              src="assets/images/login-images/register-cover.svg"
+              class="img-fluid auth-img-cover-login"
+              width="550"
+              alt=""
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="col-12 col-xl-5 col-xxl-4 auth-cover-right align-items-center justify-content-center"
+      >
+        <div class="card rounded-0 m-3 shadow-none bg-transparent mb-0">
+          <div class="card-body p-sm-5">
+            <div class="">
+              <div class="mb-3 text-center">
+                <img src="assets/images/logo-icon.png" width="60" alt="" />
+              </div>
+              <div class="text-center mb-4">
+                <h5 class="">BICC</h5>
+                <p class="mb-0">
+                  Veuillez remplir les informations ci-dessous pour créer votre
+                  compte
+                </p>
+              </div>
+              <div class="form-body">
+                <form
+                  #_form2="ngForm"
+                  (submit)="onCustomerSignup(_form2.value)"
+                  class="row g-3"
+                >
+                  <div class="col-12">
+                    <label for="inputUsername" class="form-label"
+                      >Nom complet</label
+                    >
+                    <input
+                      type="email"
+                      class="form-control"
+                      id="inputUsername"
+                      placeholder="Entrez votre nom"
+                      name="name"
+                      ngModel
+                    />
+                  </div>
+                  <div class="col-12">
+                    <label for="inputEmailAddress" class="form-label"
+                      >E-mail</label
+                    >
+                    <input
+                      type="email"
+                      class="form-control"
+                      id="inputEmailAddress"
+                      placeholder="exemple@utilisateur.com"
+                      name="email"
+                      ngModel
+                    />
+                  </div>
+                  <div class="col-12">
+                    <label for="inputChoosePassword" class="form-label"
+                      >Mot de passe</label
+                    >
+                    <div class="input-group" id="show_hide_password">
+                      <input
+                        type="password"
+                        class="form-control border-end-0"
+                        id="inputChoosePassword"
+                        placeholder="Entrez votre mot de passe"
+                        name="password"
+                        ngModel
+                      />
+                      <a
+                        href="javascript:;"
+                        class="input-group-text bg-transparent"
+                        ><i class="bx bx-hide"></i
+                      ></a>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <label for="inputAddress" class="form-label">Adresse</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="inputAddress"
+                      name="address"
+                      ngModel
+                    />
+                  </div>
+                  <!-- <div class="col-12">
                                         <label for="inputSelectCountry" class="form-label">Country</label>
                                         <select class="form-select" id="inputSelectCountry"
                                             aria-label="Default select example">
@@ -122,33 +214,45 @@
                                             <option value="3">Dubai</option>
                                         </select>
                                     </div> -->
-                                    <div class="col-12">
-                                        <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked">
-                                            <label class="form-check-label" for="flexSwitchCheckChecked">I read and
-                                                agree to Terms & Conditions</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-12">
-                                        <div class="d-grid">
-                                            <button type="submit" class="btn btn-primary">Sign up</button>
-                                        </div>
-                                    </div>
-                                    <div class="col-12">
-                                        <div class="text-center ">
-                                            <p class="mb-0">Already have an account?
-                                                <span class="text-decoration-underline cursor-pointer text-primary"
-                                                    (click)="signInToggle()">Sign in here</span>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-
-                        </div>
+                  <div class="col-12">
+                    <div class="form-check form-switch">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="flexSwitchCheckChecked"
+                      />
+                      <label
+                        class="form-check-label"
+                        for="flexSwitchCheckChecked"
+                        >J'ai lu et j'accepte les conditions générales</label
+                      >
                     </div>
-                </div>
+                  </div>
+                  <div class="col-12">
+                    <div class="d-grid">
+                      <button type="submit" class="btn btn-primary">
+                        S'inscrire
+                      </button>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <div class="text-center">
+                      <p class="mb-0">
+                        Vous avez déjà un compte ?
+                        <span
+                          class="text-decoration-underline cursor-pointer text-primary"
+                          (click)="signInToggle()"
+                          >Connectez-vous ici</span
+                        >
+                      </p>
+                    </div>
+                  </div>
+                </form>
+              </div>
             </div>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 </div>

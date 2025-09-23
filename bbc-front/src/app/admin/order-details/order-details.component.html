@@ -101,40 +101,40 @@
         <div class="card-body">
           <h5>Adresse de livraison</h5>
           <hr />
-          <p>Address: {{ order.shippingStreet }}</p>
-          <p>Post Code: {{ order.shippingPostCode }}</p>
-          <p>District: {{ order.shippingCity }}</p>
-          <p>Division: {{ order.shippingState }}</p>
+          <p>Adresse : {{ order.shippingStreet }}</p>
+          <p>Code postal : {{ order.shippingPostCode }}</p>
+          <p>District : {{ order.shippingCity }}</p>
+          <p>Région : {{ order.shippingState }}</p>
         </div>
       </div>
     </div>
     <div class="col-6">
       <div class="card">
         <div class="card-body">
-          <h5>Order Summary</h5>
+          <h5>Résumé de la commande</h5>
           <hr />
           <table class="table table-borderless">
             <tbody>
               <tr>
-                <th>Subotal</th>
+                <th>Sous-total</th>
                 <td class="text-end">{{ order.subTotal.toFixed(2) }}TND</td>
               </tr>
               <tr>
-                <th>Shipping Charge</th>
+                <th>Frais de livraison</th>
                 <td class="text-end">
                   {{ order.shippingCharge.toFixed(2) }}TND
                 </td>
               </tr>
               <tr>
-                <th>Gateway Fee</th>
+                <th>Frais de passerelle</th>
                 <td class="text-end">{{ order.gatewayFee.toFixed(2) }}TND</td>
               </tr>
               <tr>
-                <th>Tax (5%)</th>
+                <th>Taxe (5%)</th>
                 <td class="text-end">{{ order.tax.toFixed(2) }}TND</td>
               </tr>
               <tr>
-                <th>Discount</th>
+                <th>Remise</th>
                 <td class="text-end">{{ order.discount.toFixed(2) }}TND</td>
               </tr>
               <tr>
@@ -146,7 +146,7 @@
             </tbody>
           </table>
           <hr />
-          <p>Paid by {{ order.paymentMethod }}</p>
+          <p>Payé par {{ order.paymentMethod }}</p>
         </div>
       </div>
     </div>

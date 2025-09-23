@@ -5,11 +5,12 @@
       <div class="text-center mb-5">
         <h2 class="fw-bold text-primary mb-3">
           <i class="bi bi-envelope-paper me-2"></i>
-          Contact Us
+          Contactez-nous
         </h2>
         <p class="text-muted fs-5">
-          We're here to help! Send us your questions, concerns, or feedback and
-          we'll get back to you as soon as possible.
+          Notre équipe est à votre disposition. N’hésitez pas à nous transmettre
+          vos questions, remarques ou préoccupations ; nous vous répondrons dans
+          les plus brefs délais.
         </p>
       </div>
 
@@ -20,14 +21,15 @@
       >
         <i class="bi bi-person-check-fill me-2"></i>
         <div>
-          <strong>Welcome back!</strong> Your profile information has been
-          pre-filled.
+          <strong>Bon retour parmi nous !</strong> Vos informations ont été
+          pré-remplies.
           <a
             href="javascript:void(0)"
             (click)="goToCustomerDashboard()"
             class="text-decoration-none ms-2"
           >
-            <i class="bi bi-arrow-right-circle me-1"></i>Go to Dashboard
+            <i class="bi bi-arrow-right-circle me-1"></i>Accéder au tableau de
+            bord
           </a>
         </div>
       </div>
@@ -38,12 +40,12 @@
       >
         <i class="bi bi-info-circle me-2"></i>
         <div>
-          <strong>New here?</strong> You can contact us without creating an
-          account, or
+          <strong>Nouveau ici ?</strong> Vous pouvez nous contacter sans créer
+          de compte, ou
           <a routerLink="/customer/auth" class="text-decoration-none ms-1">
-            <i class="bi bi-box-arrow-in-right me-1"></i>sign in
+            <i class="bi bi-box-arrow-in-right me-1"></i>se connecter
           </a>
-          to auto-fill your information.
+          pour pré-remplir vos informations.
         </div>
       </div>
 
@@ -70,7 +72,7 @@
         role="alert"
       >
         <i class="bi bi-exclamation-triangle-fill me-2"></i>
-        <strong>Error:</strong> {{ errorMessage }}
+        <strong>Erreur :</strong> {{ errorMessage }}
         <button
           type="button"
           class="btn-close"
@@ -84,7 +86,7 @@
         <div class="card-header bg-primary text-white">
           <h4 class="card-title mb-0">
             <i class="bi bi-chat-left-text me-2"></i>
-            Send Us a Message
+            Envoyez-nous un message
           </h4>
         </div>
 
@@ -98,13 +100,14 @@
             <div class="row mb-4">
               <h5 class="text-secondary mb-3">
                 <i class="bi bi-person me-2"></i>
-                Your Information
+                Vos informations
               </h5>
 
               <!-- Customer Name -->
               <div class="col-md-6 mb-3">
                 <label for="customerName" class="form-label">
-                  <strong>Full Name</strong> <span class="text-danger">*</span>
+                  <strong>Nom complet</strong>
+                  <span class="text-danger">*</span>
                 </label>
                 <input
                   type="text"
@@ -119,15 +122,15 @@
                     (f['customerName'].dirty || submitted)
                   "
                   formControlName="customerName"
-                  placeholder="Enter your full name"
+                  placeholder="Entrez votre nom complet"
                   maxlength="100"
                 />
                 <div class="invalid-feedback">
                   <div *ngIf="f['customerName'].errors?.['required']">
-                    Full name is required.
+                    Le nom complet est requis.
                   </div>
                   <div *ngIf="f['customerName'].errors?.['minlength']">
-                    Name must be at least 2 characters long.
+                    Le nom doit comporter au moins 2 caractères.
                   </div>
                 </div>
               </div>
@@ -135,7 +138,7 @@
               <!-- Customer Email -->
               <div class="col-md-6 mb-3">
                 <label for="customerEmail" class="form-label">
-                  <strong>Email Address</strong>
+                  <strong>Adresse e-mail</strong>
                   <span class="text-danger">*</span>
                 </label>
                 <input
@@ -151,15 +154,15 @@
                     (f['customerEmail'].dirty || submitted)
                   "
                   formControlName="customerEmail"
-                  placeholder="Enter your email address"
+                  placeholder="Entrez votre adresse e-mail"
                   maxlength="100"
                 />
                 <div class="invalid-feedback">
                   <div *ngIf="f['customerEmail'].errors?.['required']">
-                    Email address is required.
+                    L'adresse e-mail est requise.
                   </div>
                   <div *ngIf="f['customerEmail'].errors?.['email']">
-                    Please enter a valid email address.
+                    Veuillez entrer une adresse e-mail valide.
                   </div>
                 </div>
               </div>
@@ -167,21 +170,21 @@
               <!-- Customer Address -->
               <div class="col-12 mb-3">
                 <label for="customerAddress" class="form-label">
-                  <strong>Address</strong>
-                  <span class="text-muted">(Optional)</span>
+                  <strong>Adresse</strong>
+                  <span class="text-muted">(Optionnel)</span>
                 </label>
                 <textarea
                   id="customerAddress"
                   class="form-control"
                   formControlName="customerAddress"
-                  placeholder="Enter your address (optional)"
+                  placeholder="Entrez votre adresse (optionnel)"
                   rows="2"
                   maxlength="255"
                 ></textarea>
                 <div class="form-text">
                   <i class="bi bi-info-circle me-1"></i>
-                  This helps us provide better support for order-related
-                  inquiries.
+                  Cela nous aide à mieux vous assister pour les demandes liées
+                  aux commandes.
                 </div>
               </div>
             </div>
@@ -190,13 +193,13 @@
             <div class="row mb-4">
               <h5 class="text-secondary mb-3">
                 <i class="bi bi-chat-square-text me-2"></i>
-                Message Details
+                Détails du message
               </h5>
 
               <!-- Category -->
               <div class="col-md-6 mb-3">
                 <label for="category" class="form-label">
-                  <strong>Category</strong> <span class="text-danger">*</span>
+                  <strong>Catégorie</strong> <span class="text-danger">*</span>
                 </label>
                 <select
                   id="category"
@@ -209,7 +212,7 @@
                   "
                   formControlName="category"
                 >
-                  <option value="" disabled>Select a category</option>
+                  <option value="" disabled>Sélectionnez une catégorie</option>
                   <option
                     *ngFor="let category of complaintCategories"
                     [value]="category.value"
@@ -218,14 +221,14 @@
                   </option>
                 </select>
                 <div class="invalid-feedback">
-                  Please select a category for your message.
+                  Veuillez sélectionner une catégorie pour votre message.
                 </div>
               </div>
 
               <!-- Priority -->
               <div class="col-md-6 mb-3">
                 <label for="priority" class="form-label">
-                  <strong>Priority</strong> <span class="text-danger">*</span>
+                  <strong>Priorité</strong> <span class="text-danger">*</span>
                 </label>
                 <select
                   id="priority"
@@ -249,14 +252,14 @@
                   </option>
                 </select>
                 <div class="invalid-feedback">
-                  Please select a priority level.
+                  Veuillez sélectionner un niveau de priorité.
                 </div>
               </div>
 
               <!-- Subject -->
               <div class="col-12 mb-3">
                 <label for="subject" class="form-label">
-                  <strong>Subject</strong> <span class="text-danger">*</span>
+                  <strong>Objet</strong> <span class="text-danger">*</span>
                 </label>
                 <input
                   type="text"
@@ -269,15 +272,15 @@
                     f['subject'].valid && (f['subject'].dirty || submitted)
                   "
                   formControlName="subject"
-                  placeholder="Brief summary of your inquiry"
+                  placeholder="Résumé de votre demande"
                   maxlength="200"
                 />
                 <div class="invalid-feedback">
                   <div *ngIf="f['subject'].errors?.['required']">
-                    Subject is required.
+                    L'objet est requis.
                   </div>
                   <div *ngIf="f['subject'].errors?.['minlength']">
-                    Subject must be at least 5 characters long.
+                    L'objet doit comporter au moins 5 caractères.
                   </div>
                 </div>
               </div>
@@ -300,22 +303,22 @@
                     (f['description'].dirty || submitted)
                   "
                   formControlName="description"
-                  placeholder="Please provide detailed information about your inquiry..."
+                  placeholder="Veuillez fournir des informations détaillées sur votre demande..."
                   rows="6"
                   maxlength="2000"
                 ></textarea>
                 <div class="invalid-feedback">
                   <div *ngIf="f['description'].errors?.['required']">
-                    Description is required.
+                    La description est requise.
                   </div>
                   <div *ngIf="f['description'].errors?.['minlength']">
-                    Description must be at least 20 characters long.
+                    La description doit comporter au moins 20 caractères.
                   </div>
                 </div>
                 <div class="form-text">
                   <i class="bi bi-chat-left-dots me-1"></i>
-                  Please be as specific as possible to help us assist you
-                  better.
+                  Soyez le plus précis possible afin de nous aider à mieux vous
+                  assister.
                 </div>
               </div>
             </div>
@@ -324,7 +327,7 @@
             <div class="row mb-4">
               <h5 class="text-secondary mb-3">
                 <i class="bi bi-paperclip me-2"></i>
-                Attachments <span class="text-muted">(Optional)</span>
+                Pièces jointes <span class="text-muted">(Optionnel)</span>
               </h5>
 
               <div class="col-12">
@@ -343,7 +346,8 @@
                   <div *ngIf="selectedFiles.length === 0">
                     <i class="bi bi-cloud-upload display-4 text-muted mb-3"></i>
                     <p class="text-muted mb-2">
-                      <strong>Click to upload files</strong> or drag and drop
+                      <strong>Cliquez pour télécharger des fichiers</strong> ou
+                      glissez-déposez
                     </p>
                     <button
                       type="button"
@@ -351,10 +355,11 @@
                       (click)="triggerFileInput($event)"
                     >
                       <i class="bi bi-plus-circle me-2"></i>
-                      Select Files
+                      Sélectionner des fichiers
                     </button>
                     <p class="text-muted small mt-2 mb-0">
-                      Supported formats: JPG, PNG, GIF, PDF, TXT (Max 5MB each)
+                      Formats supportés : JPG, PNG, GIF, PDF, TXT (Max 5Mo
+                      chacun)
                     </p>
                   </div>
 
@@ -364,7 +369,7 @@
                       class="d-flex justify-content-between align-items-center mb-3"
                     >
                       <h6 class="mb-0">
-                        Selected Files ({{ selectedFiles.length }})
+                        Fichiers sélectionnés ({{ selectedFiles.length }})
                       </h6>
                       <button
                         type="button"
@@ -372,7 +377,7 @@
                         (click)="triggerFileInput($event)"
                       >
                         <i class="bi bi-plus-circle me-1"></i>
-                        Add More
+                        Ajouter
                       </button>
                     </div>
 
@@ -404,7 +409,7 @@
                                 type="button"
                                 class="btn btn-outline-danger btn-sm ms-2"
                                 (click)="removeFile(i)"
-                                [title]="'Remove ' + file.name"
+                                [title]="'Supprimer ' + file.name"
                               >
                                 <i class="bi bi-trash"></i>
                               </button>
@@ -418,19 +423,20 @@
               </div>
             </div>
 
-            <!-- Support Information -->
+            <!-- Informations de support -->
             <div class="row mb-4">
               <div class="col-12">
                 <div class="card bg-light">
                   <div class="card-body">
                     <h6 class="card-title text-primary">
                       <i class="bi bi-headset me-2"></i>
-                      Need Immediate Help?
+                      Besoin d'aide immédiate ?
                     </h6>
                     <div class="row">
                       <div class="col-md-8">
                         <p class="card-text mb-2">
-                          For urgent matters, you can also reach us directly:
+                          Pour les urgences, vous pouvez également nous
+                          contacter directement :
                         </p>
                         <div class="d-flex flex-wrap gap-3">
                           <div
@@ -451,7 +457,7 @@
                       <div class="col-md-4 text-md-end">
                         <small class="text-muted">
                           <i class="bi bi-clock me-1"></i>
-                          Response time: 24-48 hours
+                          Délai de réponse : 24-48 heures
                         </small>
                       </div>
                     </div>
@@ -474,7 +480,7 @@
                       class="spinner-border spinner-border-sm me-2"
                     ></output>
                     <i *ngIf="!loading" class="bi bi-send me-2"></i>
-                    {{ loading ? "Sending..." : "Send Message" }}
+                    {{ loading ? "Envoi en cours..." : "Envoyer le message" }}
                   </button>
 
                   <button
@@ -484,7 +490,7 @@
                     [disabled]="loading"
                   >
                     <i class="bi bi-arrow-clockwise me-2"></i>
-                    Reset Form
+                    Réinitialiser le formulaire
                   </button>
                 </div>
               </div>
@@ -493,7 +499,7 @@
         </div>
       </div>
 
-      <!-- Additional Information -->
+      <!-- Informations complémentaires -->
       <div class="row mt-5">
         <div class="col-md-4 mb-4">
           <div class="text-center">
@@ -503,9 +509,10 @@
             >
               <i class="bi bi-clock-history fs-4"></i>
             </div>
-            <h5>Quick Response</h5>
+            <h5>Réponse rapide</h5>
             <p class="text-muted">
-              We typically respond within 24-48 hours during business days.
+              Nous répondons généralement sous 24 à 48 heures les jours
+              ouvrables.
             </p>
           </div>
         </div>
@@ -518,10 +525,10 @@
             >
               <i class="bi bi-shield-check fs-4"></i>
             </div>
-            <h5>Secure & Private</h5>
+            <h5>Sécurisé & Privé</h5>
             <p class="text-muted">
-              Your information is protected and will only be used to address
-              your inquiry.
+              Vos informations sont protégées et ne seront utilisées que pour
+              traiter votre demande.
             </p>
           </div>
         </div>
@@ -534,9 +541,9 @@
             >
               <i class="bi bi-people fs-4"></i>
             </div>
-            <h5>Expert Support</h5>
+            <h5>Support expert</h5>
             <p class="text-muted">
-              Our dedicated support team is here to help resolve your concerns.
+              Notre équipe dédiée est là pour résoudre vos préoccupations.
             </p>
           </div>
         </div>

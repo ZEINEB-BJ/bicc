@@ -5,14 +5,18 @@
       <div class="d-flex justify-content-between align-items-center">
         <div class="d-flex align-items-center gap-3">
           <button class="btn btn-outline-secondary" (click)="goBack()">
-            <i class="bi bi-arrow-left"></i> Back to Home
+            <i class="bi bi-arrow-left"></i> Retour à l'accueil
           </button>
           <div class="d-flex align-items-center gap-2">
             <i class="bi bi-tag-fill text-primary fs-4"></i>
             <div>
               <h1 class="h3 mb-0" *ngIf="category">{{ category.title }}</h1>
-              <h1 class="h3 mb-0" *ngIf="!category && !loading">All Products</h1>
-              <small class="text-muted" *ngIf="!loading">{{ products.length }} products found</small>
+              <h1 class="h3 mb-0" *ngIf="!category && !loading">
+                Tous les produits
+              </h1>
+              <small class="text-muted" *ngIf="!loading"
+                >{{ products.length }} produits trouvés</small
+              >
             </div>
           </div>
         </div>
@@ -24,9 +28,9 @@
   <section class="container py-5" *ngIf="loading">
     <div class="text-center">
       <output class="spinner-border text-primary" aria-live="polite">
-        <span class="visually-hidden">Loading...</span>
+        <span class="visually-hidden">Chargement...</span>
       </output>
-      <p class="mt-3">Loading products...</p>
+      <p class="mt-3">Chargement des produits...</p>
     </div>
   </section>
 
@@ -35,26 +39,36 @@
     <!-- Filters Section -->
     <div class="row mb-4">
       <div class="col-12">
-        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+        <div
+          class="d-flex justify-content-between align-items-center flex-wrap gap-3"
+        >
           <!-- Results Summary -->
           <div class="d-flex align-items-center gap-2">
-            <span class="text-muted">Showing</span>
+            <span class="text-muted">Affichage</span>
             <span class="fw-bold text-primary">{{ products.length }}</span>
-            <span class="text-muted">of {{ filteredProducts.length }} products</span>
+            <span class="text-muted"
+              >sur {{ filteredProducts.length }} produits</span
+            >
           </div>
 
           <!-- Filter Controls -->
           <div class="d-flex align-items-center gap-2 flex-wrap">
             <!-- Sort Dropdown -->
             <div class="d-flex align-items-center gap-2">
-              <label for="sortSelect" class="form-label mb-0 small text-muted">Sort by:</label>
+              <label for="sortSelect" class="form-label mb-0 small text-muted"
+                >Trier par :</label
+              >
               <select
                 id="sortSelect"
                 class="form-select form-select-sm"
                 [(ngModel)]="sortBy"
                 (change)="onSortChange()"
-                style="min-width: 160px;">
-                <option *ngFor="let option of sortOptions" [value]="option.value">
+                style="min-width: 160px"
+              >
+                <option
+                  *ngFor="let option of sortOptions"
+                  [value]="option.value"
+                >
                   {{ option.label }}
                 </option>
               </select>
@@ -65,17 +79,25 @@
               <button
                 class="btn btn-outline-primary d-flex align-items-center gap-2"
                 (click)="togglePriceFilter()"
-                [class.active]="showPriceFilter">
+                [class.active]="showPriceFilter"
+              >
                 <i class="bi bi-funnel"></i>
-                <span>Price Filter</span>
-                <i class="bi" [class.bi-chevron-up]="showPriceFilter" [class.bi-chevron-down]="!showPriceFilter"></i>
+                <span>Filtrer par prix</span>
+                <i
+                  class="bi"
+                  [class.bi-chevron-up]="showPriceFilter"
+                  [class.bi-chevron-down]="!showPriceFilter"
+                ></i>
               </button>
               <button
                 class="btn btn-outline-secondary"
                 (click)="resetPriceFilter()"
-                *ngIf="priceRange.min !== minPrice || priceRange.max !== maxPrice">
+                *ngIf="
+                  priceRange.min !== minPrice || priceRange.max !== maxPrice
+                "
+              >
                 <i class="bi bi-arrow-clockwise"></i>
-                Reset
+                Réinitialiser
               </button>
             </div>
           </div>
@@ -83,29 +105,43 @@
 
         <!-- Active Filter Indicator -->
         <div class="mt-2" *ngIf="isPriceFilterActive() && !showPriceFilter">
-          <div class="alert alert-info d-flex justify-content-between align-items-center">
+          <div
+            class="alert alert-info d-flex justify-content-between align-items-center"
+          >
             <div class="d-flex align-items-center">
               <i class="bi bi-funnel-fill me-2"></i>
               <span>{{ getFilterSummaryText() }}</span>
             </div>
-            <button class="btn btn-sm btn-outline-secondary" (click)="resetPriceFilter()">
-              <i class="bi bi-x-circle me-1"></i>Clear
+            <button
+              class="btn btn-sm btn-outline-secondary"
+              (click)="resetPriceFilter()"
+            >
+              <i class="bi bi-x-circle me-1"></i>Effacer
             </button>
           </div>
         </div>
 
         <!-- Price Filter Collapse -->
-        <div class="price-filter-section mt-3" [class.show]="showPriceFilter" *ngIf="showPriceFilter">
-          <div class="card border-0 bg-light" [class.price-filter-active]="isPriceFilterActive()">
+        <div
+          class="price-filter-section mt-3"
+          [class.show]="showPriceFilter"
+          *ngIf="showPriceFilter"
+        >
+          <div
+            class="card border-0 bg-light"
+            [class.price-filter-active]="isPriceFilterActive()"
+          >
             <div class="card-body">
               <div class="row align-items-center">
                 <div class="col-md-3">
                   <h6 class="mb-2">
                     <i class="bi bi-currency-dollar text-primary me-2"></i>
-                    Price Range
+                    Plage de prix
                   </h6>
                   <div class="price-display">
-                    <span class="badge bg-primary fs-6">{{ getPriceRangeText() }}</span>
+                    <span class="badge bg-primary fs-6">{{
+                      getPriceRangeText()
+                    }}</span>
                   </div>
                 </div>
 
@@ -114,12 +150,14 @@
                   <div class="mb-3">
                     <div class="form-label small">
                       <i class="bi bi-sliders me-1"></i>
-                      Price Range Sliders
+                      Curseurs de plage de prix
                     </div>
                     <div class="range-slider-container">
                       <div class="d-flex gap-2 mb-2">
                         <div class="flex-fill">
-                          <label for="minPriceSlider" class="form-label small">Min: {{ priceRange.min }} TND</label>
+                          <label for="minPriceSlider" class="form-label small"
+                            >Min : {{ priceRange.min }} TND</label
+                          >
                           <input
                             type="range"
                             class="form-range"
@@ -128,10 +166,13 @@
                             [min]="minPrice"
                             [max]="maxPrice"
                             [step]="1"
-                            (input)="onPriceRangeChange()">
+                            (input)="onPriceRangeChange()"
+                          />
                         </div>
                         <div class="flex-fill">
-                          <label for="maxPriceSlider" class="form-label small">Max: {{ priceRange.max }} TND</label>
+                          <label for="maxPriceSlider" class="form-label small"
+                            >Max : {{ priceRange.max }} TND</label
+                          >
                           <input
                             type="range"
                             class="form-range"
@@ -140,7 +181,8 @@
                             [min]="minPrice"
                             [max]="maxPrice"
                             [step]="1"
-                            (input)="onPriceRangeChange()">
+                            (input)="onPriceRangeChange()"
+                          />
                         </div>
                       </div>
                     </div>
@@ -149,7 +191,9 @@
                   <!-- Number Inputs -->
                   <div class="row g-2">
                     <div class="col-6">
-                      <label for="minPrice" class="form-label small">Min Price (TND)</label>
+                      <label for="minPrice" class="form-label small"
+                        >Prix min (TND)</label
+                      >
                       <input
                         type="number"
                         class="form-control form-control-sm"
@@ -158,10 +202,13 @@
                         [min]="minPrice"
                         [max]="priceRange.max"
                         (change)="onPriceRangeChange()"
-                        placeholder="Min">
+                        placeholder="Min"
+                      />
                     </div>
                     <div class="col-6">
-                      <label for="maxPrice" class="form-label small">Max Price (TND)</label>
+                      <label for="maxPrice" class="form-label small"
+                        >Prix max (TND)</label
+                      >
                       <input
                         type="number"
                         class="form-control form-control-sm"
@@ -170,20 +217,24 @@
                         [min]="priceRange.min"
                         [max]="maxPrice"
                         (change)="onPriceRangeChange()"
-                        placeholder="Max">
+                        placeholder="Max"
+                      />
                     </div>
                   </div>
                 </div>
 
                 <div class="col-md-3">
                   <div class="d-flex flex-column gap-2">
-                    <small class="text-muted">Available Range</small>
-                    <small class="fw-medium">{{ minPrice }} TND - {{ maxPrice }} TND</small>
+                    <small class="text-muted">Plage disponible</small>
+                    <small class="fw-medium"
+                      >{{ minPrice }} TND - {{ maxPrice }} TND</small
+                    >
                     <button
                       class="btn btn-sm btn-primary"
-                      (click)="onPriceRangeChange()">
+                      (click)="onPriceRangeChange()"
+                    >
                       <i class="bi bi-check-circle me-1"></i>
-                      Apply Filter
+                      Appliquer le filtre
                     </button>
                   </div>
                 </div>
@@ -195,7 +246,7 @@
                   <div class="d-flex align-items-center gap-2 mb-2">
                     <small class="text-muted fw-medium">
                       <i class="bi bi-lightning me-1"></i>
-                      Quick Filters:
+                      Filtres rapides :
                     </small>
                   </div>
                   <div class="d-flex flex-wrap gap-2">
@@ -203,7 +254,8 @@
                       *ngFor="let preset of getQuickFilterPresets()"
                       class="btn btn-sm btn-outline-info"
                       (click)="applyQuickFilter(preset)"
-                      [title]="preset.min + ' TND - ' + preset.max + ' TND'">
+                      [title]="preset.min + ' TND - ' + preset.max + ' TND'"
+                    >
                       <i class="bi bi-tag me-1"></i>
                       {{ preset.label }}
                     </button>
@@ -221,10 +273,7 @@
       class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 row-cols-xxl-5 g-4"
       *ngIf="products.length > 0"
     >
-      <div
-        *ngFor="let p of products; trackBy: trackByProductId"
-        class="col"
-      >
+      <div *ngFor="let p of products; trackBy: trackByProductId" class="col">
         <div
           class="card h-100 product-card cursor-pointer"
           (click)="showProduct(p.id)"
@@ -236,7 +285,7 @@
               [src]="host + getFirstImage(p)"
               class="card-img-top product-image"
               [alt]="p.title"
-              style="height: 250px; object-fit: cover;"
+              style="height: 250px; object-fit: cover"
             />
             <div class="position-absolute top-0 end-0 m-2">
               <span class="badge bg-danger discount-badge">
@@ -250,13 +299,17 @@
 
             <!-- Price Section -->
             <div class="mt-auto">
-              <div class="d-flex justify-content-between align-items-center mb-2">
+              <div
+                class="d-flex justify-content-between align-items-center mb-2"
+              >
                 <small class="text-muted"><strong>134</strong> Sales</small>
                 <div class="price-section">
                   <span class="text-decoration-line-through text-muted me-2">
                     {{ p.regularPrice }} TND
                   </span>
-                  <span class="fw-bold text-primary">{{ p.salePrice }} TND</span>
+                  <span class="fw-bold text-primary"
+                    >{{ p.salePrice }} TND</span
+                  >
                 </div>
               </div>
 
@@ -281,15 +334,17 @@
     <div *ngIf="products.length === 0" class="text-center py-5">
       <div class="empty-state-content">
         <i class="bi bi-box-seam display-1 text-muted mb-3"></i>
-        <h4 class="text-muted mb-3">No products found</h4>
+        <h4 class="text-muted mb-3">Aucun produit trouvé</h4>
         <p class="text-muted mb-4" *ngIf="category">
-          No products are available in the "{{ category.title }}" category at the moment.
+          Aucun produit n'est disponible dans la catégorie "{{
+            category.title
+          }}" pour le moment.
         </p>
         <p class="text-muted mb-4" *ngIf="!category">
-          No products are available at the moment.
+          Aucun produit n'est disponible pour le moment.
         </p>
         <button class="btn btn-primary" (click)="goBack()">
-          <i class="bi bi-house"></i> Go Back to Home
+          <i class="bi bi-house"></i> Retour à l'accueil
         </button>
       </div>
     </div>
