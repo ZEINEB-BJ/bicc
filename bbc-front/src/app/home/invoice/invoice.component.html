@@ -5,10 +5,18 @@
         <div id="invoice">
           <div class="toolbar hidden-print">
             <div class="text-end">
-              <button type="button" class="btn btn-dark">
+              <button
+                type="button"
+                class="btn btn-dark"
+                (click)="printInvoice()"
+              >
                 <i class="fa fa-print"></i> Imprimer
               </button>
-              <button type="button" class="btn btn-danger ms-2">
+              <button
+                type="button"
+                class="btn btn-danger ms-2"
+                (click)="exportPDF()"
+              >
                 <i class="fa fa-file-pdf-o"></i> Exporter en PDF
               </button>
             </div>
@@ -33,7 +41,7 @@
                     </h2>
                     <div>Tunis, Tunisie</div>
                     <!-- <div>(123) 456-789</div> -->
-                    <div>hello@BICC.com</div>
+                    <div>biccmanager2025@gmail.com</div>
                   </div>
                 </div>
               </header>
@@ -48,9 +56,9 @@
                     </div>
                   </div>
                   <div class="col invoice-details">
-                    <h1 class="invoice-id">FACTURE N°{{ order?.id }}</h1>
+                    <h1 class="invoice-id">FACTURE N°{{ order.id }}</h1>
                     <div class="date">
-                      Date de la facture : {{ order?.orderDate }}
+                      Date de la facture : {{ order.orderDate }}
                     </div>
                     <!-- <div class="date">Due Date: 30/10/2018</div> -->
                   </div>
@@ -66,48 +74,80 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let item of order.orderDetails; let i = index">
-                      <td class="no">{{ i + 1 }}</td>
-                      <td class="text-left">
-                        <h3>{{ item.productName }}</h3>
-                      </td>
-                      <td class="unit">
-                        {{ item.productUnitPrice.toFixed(2) }}TND
-                      </td>
-                      <td class="qty">{{ item.quantity }}</td>
-                      <td class="total">{{ item.subTotal.toFixed(2) }}TND</td>
-                    </tr>
+                    <ng-container *ngIf="order && order.orderDetails">
+                      <tr
+                        *ngFor="let item of order.orderDetails; let i = index"
+                      >
+                        <td class="no">{{ i + 1 }}</td>
+                        <td class="text-left">
+                          <h3>{{ item.productName }}</h3>
+                        </td>
+                        <td class="unit">
+                          {{ item.productUnitPrice.toFixed(2) }}TND
+                        </td>
+                        <td class="qty">{{ item.quantity }}</td>
+                        <td class="total">{{ item.subTotal.toFixed(2) }}TND</td>
+                      </tr>
+                    </ng-container>
                   </tbody>
                   <tfoot>
                     <tr>
                       <td colspan="2"></td>
                       <td colspan="2">SOUS-TOTAL</td>
-                      <td>{{ order.subTotal.toFixed(2) }}TND</td>
+                      <td>
+                        {{
+                          order.subTotal ? order.subTotal.toFixed(2) : "0.00"
+                        }}TND
+                      </td>
                     </tr>
                     <tr>
                       <td colspan="2"></td>
                       <td colspan="2">FRAIS DE PASSERELLE</td>
-                      <td>{{ order.gatewayFee.toFixed(2) }}TND</td>
+                      <td>
+                        {{
+                          order.gatewayFee
+                            ? order.gatewayFee.toFixed(2)
+                            : "0.00"
+                        }}TND
+                      </td>
                     </tr>
                     <tr>
                       <td colspan="2"></td>
                       <td colspan="2">FRAIS DE LIVRAISON</td>
-                      <td>{{ order.shippingCharge.toFixed(2) }}TND</td>
+                      <td>
+                        {{
+                          order.shippingCharge
+                            ? order.shippingCharge.toFixed(2)
+                            : "0.00"
+                        }}TND
+                      </td>
                     </tr>
                     <tr>
                       <td colspan="2"></td>
                       <td colspan="2">REMISE</td>
-                      <td>{{ order.discount.toFixed(2) }}TND</td>
+                      <td>
+                        {{
+                          order.discount ? order.discount.toFixed(2) : "0.00"
+                        }}TND
+                      </td>
                     </tr>
                     <tr>
                       <td colspan="2"></td>
                       <td colspan="2">TAXE 10%</td>
-                      <td>{{ order.tax.toFixed(2) }}TND</td>
+                      <td>
+                        {{ order.tax ? order.tax.toFixed(2) : "0.00" }}TND
+                      </td>
                     </tr>
                     <tr>
                       <td colspan="2"></td>
                       <td colspan="2">TOTAL GÉNÉRAL</td>
-                      <td>{{ order.orderTotal.toFixed(2) }}TND</td>
+                      <td>
+                        {{
+                          order.orderTotal
+                            ? order.orderTotal.toFixed(2)
+                            : "0.00"
+                        }}TND
+                      </td>
                     </tr>
                   </tfoot>
                 </table>

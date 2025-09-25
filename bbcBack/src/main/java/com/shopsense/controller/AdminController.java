@@ -102,4 +102,10 @@ public class AdminController {
 	public List<Order> getShippedOrders() {
 		return da.getShippedOrders();
 	}
+
+	@GetMapping(value = "/admin/support/emails")
+	public List<String> getSupportEmails() {
+		// Example: Returns a list of support emails
+		return List.of("support1@example.com", "support2@example.com");
+	}
 }

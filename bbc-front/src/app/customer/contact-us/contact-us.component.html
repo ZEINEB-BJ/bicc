@@ -228,7 +228,7 @@
                     [class.is-invalid]="submitted && f['priority'].errors"
                   >
                     <option
-                      *ngFor="let priority of priorityLevels"
+                      *ngFor="let priority of complaintPriorities"
                       [value]="priority.value"
                     >
                       {{ priority.label }}

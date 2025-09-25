@@ -5,13 +5,17 @@ import { NgToastService } from 'ng-angular-popup';
 import { ComplaintService } from 'src/app/services/complaint.service';
 import { CustomerService } from 'src/app/services/customer.service';
 import { AdminService } from 'src/app/services/admin.service';
-import { Complaint, ComplaintCategory, ComplaintPriority } from 'src/app/interfaces/complaint';
+import {
+  Complaint,
+  ComplaintCategory,
+  ComplaintPriority,
+} from 'src/app/interfaces/complaint';
 import { Customer } from 'src/app/interfaces/customer';
 
 @Component({
   selector: 'app-contact-us',
   templateUrl: './contact-us.component.html',
-  styleUrls: ['./contact-us.component.css']
+  styleUrls: ['./contact-us.component.css'],
 })
 export class ContactUsComponent implements OnInit {
   complaintForm: FormGroup;
@@ -21,7 +25,13 @@ export class ContactUsComponent implements OnInit {
   errorMessage = '';
   selectedFiles: File[] = [];
   maxFileSize = 5 * 1024 * 1024; // 5MB
-  allowedFileTypes = ['image/jpeg', 'image/png', 'image/gif', 'application/pdf', 'text/plain'];
+  allowedFileTypes = [
+    'image/jpeg',
+    'image/png',
+    'image/gif',
+    'application/pdf',
+    'text/plain',
+  ];
 
   // Admin support emails
   adminSupportEmails: string[] = [];
@@ -30,18 +40,12 @@ export class ContactUsComponent implements OnInit {
   complaintCategories = [
     { value: ComplaintCategory.PRODUCT_ISSUE, label: 'Product Issue' },
     { value: ComplaintCategory.DELIVERY_ISSUE, label: 'Delivery Issue' },
-    { value: ComplaintCategory.PAYMENT_ISSUE, label: 'Payment Issue' },
-    { value: ComplaintCategory.CUSTOMER_SERVICE, label: 'Customer Service' },
-    { value: ComplaintCategory.WEBSITE_ISSUE, label: 'Website Issue' },
-    { value: ComplaintCategory.RETURN_REFUND, label: 'Return & Refund' },
-    { value: ComplaintCategory.OTHER, label: 'Other' }
   ];
-
-  priorityLevels = [
+  complaintPriorities = [
     { value: ComplaintPriority.LOW, label: 'Low', color: 'success' },
     { value: ComplaintPriority.MEDIUM, label: 'Medium', color: 'warning' },
     { value: ComplaintPriority.HIGH, label: 'High', color: 'danger' },
-    { value: ComplaintPriority.URGENT, label: 'Urgent', color: 'dark' }
+    { value: ComplaintPriority.URGENT, label: 'Urgent', color: 'dark' },
   ];
 
   constructor(
@@ -55,11 +59,11 @@ export class ContactUsComponent implements OnInit {
     this.complaintForm = this.formBuilder.group({
       customerName: ['', [Validators.required, Validators.minLength(2)]],
       customerEmail: ['', [Validators.required, Validators.email]],
-      customerAddress: [''], // Optional field for customer address
+      customerAddress: [''],
       subject: ['', [Validators.required, Validators.minLength(5)]],
-      description: ['', [Validators.required, Validators.minLength(20)]],
-      category: [ComplaintCategory.OTHER, [Validators.required]],
-      priority: [ComplaintPriority.MEDIUM, [Validators.required]]
+      description: ['', [Validators.required, Validators.minLength(10)]],
+      category: [ComplaintCategory.PRODUCT_ISSUE, [Validators.required]],
+      priority: [ComplaintPriority.MEDIUM, [Validators.required]],
     });
   }
 
@@ -78,7 +82,7 @@ export class ContactUsComponent implements OnInit {
       this.complaintForm.patchValue({
         customerName: customer.name || '',
         customerEmail: customer.email || '',
-        customerAddress: customer.address || ''
+        customerAddress: customer.address || '',
       });
 
       // Also try to get fresh data from server to ensure we have latest info
@@ -91,7 +95,7 @@ export class ContactUsComponent implements OnInit {
         this.complaintForm.patchValue({
           customerName: customer.name || '',
           customerEmail: customer.email || '',
-          customerAddress: customer.address || ''
+          customerAddress: customer.address || '',
         });
       }
     }
@@ -106,20 +110,20 @@ export class ContactUsComponent implements OnInit {
             this.complaintForm.patchValue({
               customerName: customer.name || '',
               customerEmail: customer.email || '',
-              customerAddress: customer.address || ''
+              customerAddress: customer.address || '',
             });
 
             console.log('Customer data loaded:', {
               name: customer.name,
               email: customer.email,
-              address: customer.address
+              address: customer.address,
             });
           }
         },
         error: (error) => {
           console.warn('Could not load fresh customer data:', error);
           // Form will keep the localStorage data, which is fine
-        }
+        },
       });
     } catch (error) {
       console.warn('Error loading customer data:', error);
@@ -143,21 +147,31 @@ export class ContactUsComponent implements OnInit {
         error: (error) => {
           console.warn('Could not load admin support emails:', error);
           // Use fallback emails
-          this.adminSupportEmails = [this.primarySupportEmail, 'admin@yourstore.com'];
-        }
+          this.adminSupportEmails = [
+            this.primarySupportEmail,
+            'admin@yourstore.com',
+          ];
+        },
       });
     } catch (error) {
       console.warn('Error loading admin support emails:', error);
       // Use fallback emails
-      this.adminSupportEmails = [this.primarySupportEmail, 'admin@yourstore.com'];
+      this.adminSupportEmails = [
+        this.primarySupportEmail,
+        'admin@yourstore.com',
+      ];
     }
   }
 
-  get f() { return this.complaintForm.controls; }
+  get f() {
+    return this.complaintForm.controls;
+  }
 
   triggerFileInput(event: Event): void {
     event.preventDefault();
-    const fileInput = document.getElementById('attachments') as HTMLInputElement;
+    const fileInput = document.getElementById(
+      'attachments'
+    ) as HTMLInputElement;
     if (fileInput) {
       fileInput.click();
     }
@@ -203,14 +217,16 @@ export class ContactUsComponent implements OnInit {
       const attachmentUrls = await this.uploadFiles();
       const complaint = this.createComplaintObject(attachmentUrls);
       const response = await this.submitComplaint(complaint);
-
-      if (response?.id) {
-        await this.sendNotificationEmails(response);
-        this.handleSuccessfulSubmission(response.id);
+      if (
+        response &&
+        typeof response === 'object' &&
+        (response as any).message
+      ) {
+        await this.sendNotificationEmails(complaint);
+        this.handleSuccessfulSubmission();
       } else {
         throw new Error('Invalid response from server');
       }
-
     } catch (error: any) {
       this.handleSubmissionError(error);
     } finally {
@@ -223,7 +239,9 @@ export class ContactUsComponent implements OnInit {
 
     for (let file of this.selectedFiles) {
       try {
-        const uploadResponse = await this.complaintService.uploadAttachment(file).toPromise();
+        const uploadResponse = await this.complaintService
+          .uploadAttachment(file)
+          .toPromise();
         if (uploadResponse?.url) {
           attachmentUrls.push(uploadResponse.url);
         }
@@ -248,47 +266,43 @@ export class ContactUsComponent implements OnInit {
       status: 'PENDING' as any,
       attachments: attachmentUrls,
       createdAt: new Date(),
-      updatedAt: new Date()
+      updatedAt: new Date(),
     };
   }
 
-  private async submitComplaint(complaint: Complaint): Promise<Complaint> {
+  private async submitComplaint(
+    complaint: Complaint
+  ): Promise<{ message: string }> {
     console.log('Submitting complaint:', complaint);
-    const response = await this.complaintService.createComplaint(complaint).toPromise();
-
+    const response = await this.complaintService
+      .createComplaint(complaint)
+      .toPromise();
     if (!response) {
       throw new Error('No response received from server');
     }
-
     console.log('Complaint created successfully:', response);
-    return response;
+    return response as unknown as { message: string };
   }
 
   private async sendNotificationEmails(complaint: Complaint): Promise<void> {
     try {
       await this.complaintService.sendAdminNotification(complaint).toPromise();
       console.log('Admin notification sent');
-
-      if (complaint.id) {
-        await this.complaintService.sendCustomerConfirmation(complaint.id).toPromise();
-        console.log('Customer confirmation sent');
-      }
     } catch (emailError) {
       console.warn('Email notification failed:', emailError);
     }
   }
 
-  private handleSuccessfulSubmission(complaintId: number): void {
-    this.successMessage = `Your complaint has been submitted successfully!
-                          Complaint ID: #${complaintId}
-                          You will receive a confirmation email shortly.
-                          An administrator will review your complaint and respond within 24-48 hours.`;
+  private handleSuccessfulSubmission(): void {
+    this.successMessage = `Votre plainte a été soumise avec succès !
+    Vous recevrez un email de confirmation sous peu.
+    Un administrateur examinera votre plainte et vous répondra dans les 24 à 48 heures.`;
 
     // Show success toast
     this.toast.success({
-      detail: 'Complaint Submitted Successfully!',
-      summary: `Your complaint #${complaintId} has been received. You'll get an email confirmation shortly.`,
-      duration: 6000
+      detail: 'Plainte soumise avec succès !',
+      summary: `Votre plainte a été reçue. Vous recevrez bientôt un email de confirmation.`,
+      duration: 6000,
     });
 
     this.resetForm();
@@ -300,20 +314,23 @@ export class ContactUsComponent implements OnInit {
 
     const errorMessages: { [key: number]: string } = {
       0: 'Unable to connect to the server. Please check your internet connection and try again.',
-      400: error.error?.message || 'Invalid form data. Please check your entries and try again.',
+      400:
+        error.error?.message ||
+        'Invalid form data. Please check your entries and try again.',
       401: 'You must be logged in to submit a complaint. Please log in and try again.',
-      500: 'Server error occurred. Please try again later or contact support.'
+      500: 'Server error occurred. Please try again later or contact support.',
     };
 
-    this.errorMessage = errorMessages[error.status] ||
-                       error.error?.message ||
-                       'An error occurred while submitting your complaint. Please try again.';
+    this.errorMessage =
+      errorMessages[error.status] ||
+      error.error?.message ||
+      'An error occurred while submitting your complaint. Please try again.';
 
     // Show error toast
     this.toast.error({
       detail: 'Complaint Submission Failed',
       summary: this.errorMessage,
-      duration: 8000
+      duration: 8000,
     });
 
     window.scrollTo({ top: 0, behavior: 'smooth' });
