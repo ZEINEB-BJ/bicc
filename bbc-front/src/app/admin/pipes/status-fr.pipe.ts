@@ -5,6 +5,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class StatusFrPipe implements PipeTransform {
   private statusMap: { [key: string]: string } = {
+    Shipped: 'Expédiée',
     Pending: 'En attente',
     Delivered: 'Livrée',
     Active: 'Actif',

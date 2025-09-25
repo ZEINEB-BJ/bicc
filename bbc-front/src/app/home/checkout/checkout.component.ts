@@ -133,6 +133,7 @@ export class CheckoutComponent {
         if (order != null) {
           this.util.toastify(true, 'Order Placed');
           this.router.navigate(['../invoice', order.id]);
+          this.customerService.clearCart();
           this.customerService.toUpdateCart();
         } else {
           this.util.toastify(false);

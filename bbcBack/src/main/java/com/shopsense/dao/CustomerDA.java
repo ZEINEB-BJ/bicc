@@ -93,16 +93,54 @@ public class CustomerDA {
 	public Order getOrder(int id) {
 		Order o = null;
 		try {
-			pst = db.get().prepareStatement("SELECT * FROM orders WHERE id = ?");
+			pst = db.get().prepareStatement("SELECT * FROM orders WHERE order_id = ?");
 			pst.setInt(1, id);
 			ResultSet rs = pst.executeQuery();
 			if (rs.next()) {
 				o = new Order();
-				o.setId(rs.getInt("id"));
+				o.setId(rs.getInt("order_id"));
 				o.setOrderDate(rs.getDate("order_date"));
 				o.setOrderTotal(rs.getDouble("order_total"));
 				o.setCustomerId(rs.getInt("customer_id"));
 				o.setStatus(rs.getString("status"));
+				o.setDiscount(rs.getDouble("discount"));
+				o.setShippingCharge(rs.getDouble("shipping_charge"));
+				o.setTax(rs.getDouble("tax"));
+				o.setShippingStreet(rs.getString("shipping_street"));
+				o.setShippingCity(rs.getString("shipping_city"));
+				o.setShippingPostCode(rs.getString("shipping_post_code"));
+				o.setShippingState(rs.getString("shipping_state"));
+				o.setShippingCountry(rs.getString("shipping_country"));
+				o.setSubTotal(rs.getDouble("sub_total"));
+				o.setPaymentStatus(rs.getString("payment_status"));
+				o.setPaymentMethod(rs.getString("payment_method"));
+				o.setCardNumber(rs.getString("card_number"));
+				o.setCardCvv(rs.getString("card_cvv"));
+				o.setCardHolderName(rs.getString("card_holder_name"));
+				o.setCardExpiryDate(rs.getString("card_expiry_date"));
+				o.setGatewayFee(rs.getDouble("gateway_fee"));
+
+				// Récupérer les détails de la commande
+				PreparedStatement pst2 = db.get().prepareStatement("SELECT * FROM order_details WHERE order_id = ?");
+				pst2.setInt(1, id);
+				ResultSet rs2 = pst2.executeQuery();
+				List<OrderDetails> details = new ArrayList<>();
+				while (rs2.next()) {
+					OrderDetails od = new OrderDetails();
+					od.setOrderDetailsId(rs2.getInt("order_details_id"));
+					od.setOrderId(rs2.getInt("order_id"));
+					od.setProductId(rs2.getInt("product_id"));
+					od.setSellerId(rs2.getInt("seller_id"));
+					od.setProductName(rs2.getString("product_name"));
+					od.setProductUnitPrice(rs2.getDouble("product_unit_price"));
+					od.setProductThumbnailUrl(rs2.getString("product_thumbnail_url"));
+					od.setStatus(rs2.getString("status"));
+					od.setQuantity(rs2.getInt("quantity"));
+					od.setSubTotal(rs2.getDouble("sub_total"));
+					od.setDeliveryDate(rs2.getDate("delivery_date"));
+					details.add(od);
+				}
+				o.setOrderDetails(details);
 			}
 		} catch (Exception e) {
 			System.out.println(e);

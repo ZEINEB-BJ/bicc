@@ -42,6 +42,7 @@ export class InvoiceComponent implements OnInit {
 
     let invoiceId = this.route.snapshot.params['id'];
     this.customerService.getOrder(invoiceId).subscribe((order: any) => {
+      console.log('Backend order response:', order);
       // Mapping explicite pour garantir la correspondance des champs
       this.order = {
         id: order.id ?? order.ID ?? null,

@@ -56,9 +56,9 @@
                     </div>
                   </div>
                   <div class="col invoice-details">
-                    <h1 class="invoice-id">FACTURE N°{{ order.id }}</h1>
+                    <h1 class="invoice-id">FACTURE N°{{ order?.id }}</h1>
                     <div class="date">
-                      Date de la facture : {{ order.orderDate }}
+                      Date de la facture : {{ order?.orderDate }}
                     </div>
                     <!-- <div class="date">Due Date: 30/10/2018</div> -->
                   </div>
@@ -94,18 +94,15 @@
                     <tr>
                       <td colspan="2"></td>
                       <td colspan="2">SOUS-TOTAL</td>
-                      <td>
-                        {{
-                          order.subTotal ? order.subTotal.toFixed(2) : "0.00"
-                        }}TND
-                      </td>
+                      <td>{{ order?.subTotal?.toFixed(2) ?? "0.00" }}TND</td>
                     </tr>
                     <tr>
                       <td colspan="2"></td>
                       <td colspan="2">FRAIS DE PASSERELLE</td>
                       <td>
                         {{
-                          order.gatewayFee
+                          order?.gatewayFee !== undefined &&
+                          order?.gatewayFee !== null
                             ? order.gatewayFee.toFixed(2)
                             : "0.00"
                         }}TND
@@ -116,7 +113,8 @@
                       <td colspan="2">FRAIS DE LIVRAISON</td>
                       <td>
                         {{
-                          order.shippingCharge
+                          order?.shippingCharge !== undefined &&
+                          order?.shippingCharge !== null
                             ? order.shippingCharge.toFixed(2)
                             : "0.00"
                         }}TND
@@ -127,7 +125,10 @@
                       <td colspan="2">REMISE</td>
                       <td>
                         {{
-                          order.discount ? order.discount.toFixed(2) : "0.00"
+                          order?.discount !== undefined &&
+                          order?.discount !== null
+                            ? order.discount.toFixed(2)
+                            : "0.00"
                         }}TND
                       </td>
                     </tr>
@@ -135,7 +136,11 @@
                       <td colspan="2"></td>
                       <td colspan="2">TAXE 10%</td>
                       <td>
-                        {{ order.tax ? order.tax.toFixed(2) : "0.00" }}TND
+                        {{
+                          order?.tax !== undefined && order?.tax !== null
+                            ? order.tax.toFixed(2)
+                            : "0.00"
+                        }}TND
                       </td>
                     </tr>
                     <tr>
@@ -143,7 +148,8 @@
                       <td colspan="2">TOTAL GÉNÉRAL</td>
                       <td>
                         {{
-                          order.orderTotal
+                          order?.orderTotal !== undefined &&
+                          order?.orderTotal !== null
                             ? order.orderTotal.toFixed(2)
                             : "0.00"
                         }}TND

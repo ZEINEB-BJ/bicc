@@ -13,11 +13,10 @@ import { AuthRequest } from '../interfaces/auth-request';
 import { AuthResponse } from '../interfaces/auth-response';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CustomerService {
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   private host: string = 'http://localhost:8080';
 
@@ -28,17 +27,20 @@ export class CustomerService {
   parentMethodCalled$ = this.parentMethodCallSource.asObservable();
 
   toUpdateCart() {
-    this.parentMethodCallSource.next("");
+    this.parentMethodCallSource.next('');
   }
 
   getCustomerHeaders(): HttpHeaders {
     return new HttpHeaders({
-      'Authorization': 'Bearer ' + localStorage.getItem("customer-jwt")
-    })
+      Authorization: 'Bearer ' + localStorage.getItem('customer-jwt'),
+    });
   }
 
   customerLogin(customer: AuthRequest): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(this.baseUrl.concat('/login'), customer);
+    return this.http.post<AuthResponse>(
+      this.baseUrl.concat('/login'),
+      customer
+    );
   }
 
   customerSignup(customer: Customer): Observable<Customer> {
@@ -50,7 +52,10 @@ export class CustomerService {
   }
 
   getCustomer1(): Observable<Customer> {
-    return this.http.get<Customer>(this.baseUrl.concat('/') + this.getCustomer().id, { headers: this.getCustomerHeaders() });
+    return this.http.get<Customer>(
+      this.baseUrl.concat('/') + this.getCustomer().id,
+      { headers: this.getCustomerHeaders() }
+    );
   }
 
   getProduct(id: number): Observable<Product> {
@@ -62,51 +67,55 @@ export class CustomerService {
   }
 
   addToCart(cartItem: CartItem): Observable<CartItem> {
-    return this.http.post<CartItem>(this.baseUrl.concat('/cart'), cartItem, { headers: this.getCustomerHeaders() });
+    return this.http.post<CartItem>(this.baseUrl.concat('/cart'), cartItem, {
+      headers: this.getCustomerHeaders(),
+    });
   }
 
   updateCart(cartItem: CartItem): Observable<boolean> {
-    return this.http.put<boolean>(this.baseUrl.concat('/cart'), cartItem, { headers: this.getCustomerHeaders() });
+    return this.http.put<boolean>(this.baseUrl.concat('/cart'), cartItem, {
+      headers: this.getCustomerHeaders(),
+    });
   }
 
   removeFromCart(id: number): Observable<boolean> {
     return this.http.delete<boolean>(this.baseUrl.concat('/cart'), {
-      params: { "id": id },
-      headers: this.getCustomerHeaders()
+      params: { id: id },
+      headers: this.getCustomerHeaders(),
     });
   }
 
   getCartItems(): Observable<CartItem[]> {
     return this.http.get<CartItem[]>(this.baseUrl.concat('/cart'), {
-      params: { "id": this.getCustomer().id },
-      headers: this.getCustomerHeaders()
+      params: { id: this.getCustomer().id },
+      headers: this.getCustomerHeaders(),
     });
   }
 
-
-
   placeOrder(order: Order): Observable<Order> {
-    return this.http.post<Order>(this.baseUrl.concat('/order'), order, { headers: this.getCustomerHeaders() });
+    return this.http.post<Order>(this.baseUrl.concat('/order'), order, {
+      headers: this.getCustomerHeaders(),
+    });
   }
 
   getOrder(id: number): Observable<Order> {
     return this.http.get<Order>(this.baseUrl.concat('/order'), {
-      params: { "id": id },
-      headers: this.getCustomerHeaders()
+      params: { id: id },
+      headers: this.getCustomerHeaders(),
     });
   }
 
   getOrders(id: number): Observable<Order[]> {
     return this.http.get<Order[]>(this.baseUrl.concat('/orders'), {
-      params: { "id": id },
-      headers: this.getCustomerHeaders()
+      params: { id: id },
+      headers: this.getCustomerHeaders(),
     });
   }
 
   trackOrder(id: number): Observable<OrderDetails> {
     return this.http.get<OrderDetails>(this.baseUrl.concat('/track'), {
-      params: { "id": id },
-      headers: this.getCustomerHeaders()
+      params: { id: id },
+      headers: this.getCustomerHeaders(),
     });
   }
 
@@ -115,27 +124,35 @@ export class CustomerService {
       this.host.concat('/wishlist?customerId=') + this.getCustomer().id
     );
   }
-  
+
   addToWishlist(wishlist: Wishlist): Observable<boolean> {
     return this.http.post<boolean>(this.host.concat('/wishlist/add'), wishlist);
   }
 
   removeFromWishlist(wishlist: Wishlist): Observable<boolean> {
-    return this.http.post<boolean>(this.host.concat('/wishlist/remove'), wishlist);
+    return this.http.post<boolean>(
+      this.host.concat('/wishlist/remove'),
+      wishlist
+    );
   }
 
   isWishlisted(wishlist: Wishlist): Observable<boolean> {
-    return this.http.post<boolean>(this.host.concat('/wishlist/check'), wishlist);
+    return this.http.post<boolean>(
+      this.host.concat('/wishlist/check'),
+      wishlist
+    );
   }
 
   getReviews(productId: number): Observable<Review[]> {
-    return this.http.get<Review[]>(this.host.concat('/review?productId=') + productId);
+    return this.http.get<Review[]>(
+      this.host.concat('/review?productId=') + productId
+    );
   }
 
   isProductPurchased(productId: number): Observable<boolean> {
     return this.http.get<boolean>(this.baseUrl.concat('/check-purchased'), {
       params: { productId, customerId: this.getCustomer().id },
-      headers: this.getCustomerHeaders()
+      headers: this.getCustomerHeaders(),
     });
   }
 
@@ -144,20 +161,35 @@ export class CustomerService {
   }
 
   getSearchProducts(q: string): Observable<Product[]> {
-    return this.http.get<Product[]>(this.host.concat('/search'), { params: { q } });
+    return this.http.get<Product[]>(this.host.concat('/search'), {
+      params: { q },
+    });
   }
 
   sendVerificationCode(c: Customer): Observable<boolean> {
-    return this.http.post<boolean>(this.baseUrl.concat('/send-code'), c, { headers: this.getCustomerHeaders() });
+    return this.http.post<boolean>(this.baseUrl.concat('/send-code'), c, {
+      headers: this.getCustomerHeaders(),
+    });
   }
 
   verifyCode(code: number): Observable<boolean> {
     return this.http.get<boolean>(this.baseUrl.concat('/verify-code'), {
       params: {
         userId: this.getCustomer().id,
-        code
+        code,
       },
-      headers: this.getCustomerHeaders()
+      headers: this.getCustomerHeaders(),
+    });
+  }
+
+  // Clear all items from the cart
+  clearCart(): void {
+    this.getCartItems().subscribe((items: CartItem[]) => {
+      items.forEach((item: CartItem) => {
+        if (item.id !== undefined && item.id !== null) {
+          this.removeFromCart(item.id).subscribe();
+        }
+      });
     });
   }
 }
