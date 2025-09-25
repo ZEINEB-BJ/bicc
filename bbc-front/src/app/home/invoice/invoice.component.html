@@ -33,7 +33,7 @@
                     </h2>
                     <div>Tunis, Tunisie</div>
                     <!-- <div>(123) 456-789</div> -->
-                    <div>biccmanager2025@gmail.com</div>
+                    <div>hello@BICC.com</div>
                   </div>
                 </div>
               </header>
@@ -48,13 +48,10 @@
                     </div>
                   </div>
                   <div class="col invoice-details">
-                    <h1 class="invoice-id" *ngIf="order">
-                      FACTURE N°{{ order.id }}
-                    </h1>
+                    <h1 class="invoice-id">FACTURE N°{{ order?.id }}</h1>
                     <div class="date">
                       Date de la facture : {{ order?.orderDate }}
                     </div>
-
                     <!-- <div class="date">Due Date: 30/10/2018</div> -->
                   </div>
                 </div>
@@ -69,7 +66,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let item of order?.orderDetails; let i = index">
+                    <tr *ngFor="let item of order.orderDetails; let i = index">
                       <td class="no">{{ i + 1 }}</td>
                       <td class="text-left">
                         <h3>{{ item.productName }}</h3>
